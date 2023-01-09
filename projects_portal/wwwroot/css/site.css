@@ -1,0 +1,46 @@
+﻿body {
+    background-color: #1b1919
+}
+.headerColor {
+    background: rgb(228,170,219);
+    background: linear-gradient(90deg, rgba(228,170,219,1) 7%, rgba(14,116,215,1) 100%);
+}
+
+
+.right_text {
+    display: inline;
+}
+
+.fixed-button {
+    z-index: 99;
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+    background: rgb(228,170,219);
+    background: linear-gradient(90deg, rgba(228,170,219,1) 7%, rgba(14,116,215,1) 100%);
+    color: #ffffff;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    transition: 0.3s ease-in-out;
+}
+
+.fixed-button i {
+    position: relative;
+    top: 12px;
+    left: 17px;
+}
+
+.fixed-button:hover {
+    transform: scale(1.1);
+    color: #ffffff;
+}
+
+.card-body {
+    background-color: #2D2D2D;
+    border-radius: 20px;
+}
+
+.card {
+    background-color: #1b1919
+}

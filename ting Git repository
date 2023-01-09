@@ -1,0 +1,46 @@
+[1mdiff --git a/projects_portal/Controllers/HomeController.cs b/projects_portal/Controllers/HomeController.cs[m
+[1mindex e49d496..dfccfa9 100644[m
+[1m--- a/projects_portal/Controllers/HomeController.cs[m
+[1m+++ b/projects_portal/Controllers/HomeController.cs[m
+[36m@@ -117,7 +117,41 @@[m [mnamespace projects_portal.Controllers[m
+             return RedirectToAction("Index");[m
+         }[m
+ [m
+[32m+[m[32m        public async Task<IActionResult> postDetail(int? id)[m
+[32m+[m[32m        {[m
+[32m+[m[32m            if (id != null)[m
+[32m+[m[32m            {[m
+[32m+[m[32m                AddProject project = await db.addProject.FirstOrDefaultAsync(p => p.Id == id);[m
+[32m+[m[32m                if (project != null)[m
+[32m+[m[32m                {[m
+[32m+[m[32m                    return View(project);[m
+[32m+[m[32m                }[m
+[32m+[m[32m            }[m
+[32m+[m[32m            return NotFound();[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        [HttpGet][m
+[32m+[m[32m        public async Task<IActionResult> editPost (int? id)[m
+[32m+[m[32m        {[m
+[32m+[m[32m            if (id != null)[m
+[32m+[m[32m            {[m
+[32m+[m[32m                AddProject project = await db.addProject.FirstOrDefaultAsync(p => p.Id == id);[m
+[32m+[m[32m                if (project != null)[m
+[32m+[m[32m                {[m
+[32m+[m[32m                    return View(project);[m
+[32m+[m[32m                }[m
+[32m+[m
+[32m+[m[32m            }[m
+[32m+[m[32m            return NotFound();[m
+[32m+[m[32m        }[m
+ [m
+[32m+[m[32m        [HttpPost][m[41m [m
+[32m+[m[32m        public async Task<IActionResult> editPost (AddProject project)[m
+[32m+[m[32m        {[m
+[32m+[m[32m            db.addProject.Update(project);[m
+[32m+[m[32m            await db.SaveChangesAsync();[m
+[32m+[m[32m            return RedirectToAction("Index");[m
+[32m+[m[32m        }[m
+ [m
+ [m
+         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)][m
