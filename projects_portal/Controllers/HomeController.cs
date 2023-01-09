@@ -42,12 +42,12 @@ namespace projects_portal.Controllers
         public async Task<IActionResult> Create(CreateModel createModel)
         {
             createModel.UserName = User.Identity.Name;
-            if(createModel.UserName != null)
+            if (createModel.UserName != null)
             {
                 User user = await db.User.FirstOrDefaultAsync(u => u.Login == createModel.UserName);
                 if (user != null)
                 {
-                    db.addProject.Add(new AddProject { NameOfProject = createModel.NameOfProject, UserName = User.Identity.Name, Name = createModel.Name, TimeOfCreating = DateTime.UtcNow, Group = createModel.Group, Description = createModel.Description, PresentationFile = createModel.PresentationFile, apkFilePath = createModel.apkFilePath, urlGit = createModel.urlGit, siteUrl = createModel.siteUrl, ImagePath = createModel.ImagePath});
+                    db.addProject.Add(new AddProject { NameOfProject = createModel.NameOfProject, UserName = User.Identity.Name, Name = createModel.Name, TimeOfCreating = DateTime.UtcNow, Group = createModel.Group, Description = createModel.Description, PresentationFile = createModel.PresentationFile, apkFilePath = createModel.apkFilePath, urlGit = createModel.urlGit, siteUrl = createModel.siteUrl, ImagePath = createModel.ImagePath });
                     await db.SaveChangesAsync();
                     return RedirectToAction("Index");
                 }
@@ -131,7 +131,7 @@ namespace projects_portal.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> editPost (int? id)
+        public async Task<IActionResult> editPost(int? id)
         {
             if (id != null)
             {
@@ -145,12 +145,40 @@ namespace projects_portal.Controllers
             return NotFound();
         }
 
-        [HttpPost] 
-        public async Task<IActionResult> editPost (AddProject project)
+        [HttpPost]
+        public async Task<IActionResult> editPost(AddProject project)
         {
             db.addProject.Update(project);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        [ActionName("projectDelete")]
+        public async Task<IActionResult> ConfirmDelete (int? id)
+        {
+            if (id != null)
+            {
+                AddProject project = await db.addProject.FirstOrDefaultAsync(p => p.Id == id);
+                if (project != null)
+                {
+                    return View();
+                }
+            }
+            return NotFound();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> projectDelete (int? id)
+        {
+            if (id != null)
+            {
+                AddProject project = new AddProject { Id = id.Value };
+                db.Entry(project).State = EntityState.Deleted;
+                await db.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+            return NotFound();
         }
 
 
