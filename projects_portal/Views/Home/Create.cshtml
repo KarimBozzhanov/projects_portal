@@ -31,19 +31,22 @@
 
                                 </div>
                                 <div class="form-group mt-2">
-                                    <a class="git text-light" onclick="file.click()" style="text-decoration: none"><b>APK файл</b><i class="fa-regular fa-file" style="padding-left: 10px"></i></a>
-                                    <input id="file" type="file" name="uploadedApk" hidden />
+                                    <a class="git text-light btn" onclick="apk.click()" style="text-decoration: none"><b>APK файл</b><i class="fa-regular fa-file" style="padding-left: 10px"></i></a>
+                                    <input id="apk" type="file" name="uploadedApk" hidden />
                                 </div>
                                 <div class="form-group mt-2">
-                                    <a class="download text-light" onclick="file.click()" style="text-decoration: none"><b>Презентация</b><i class="fa-regular fa-folder" style="padding-left: 10px"></i></a>
-                                    <input id="file" type="file" name="uploadedPresentation" hidden />
+                                    <a class="download text-light btn" onclick="presentation.click()" style="text-decoration: none"><b>Презентация</b><i class="fa-regular fa-folder" style="padding-left: 10px"></i></a>
+                                    <input id="presentation" type="file" name="uploadedPresentation" hidden />
                                 </div>
                             </div>
                             <hr style="background-color: #696969; margin-top: 0px; margin-bottom: 30px" />
                         </div>
                         <div class="user-content">
                             <div class="box">
-                                <a class="btn" float="left" style="width: 150px; height: 190px; background-color: #1b1919"><center>Image</center></a>
+                                <div class="form-group">
+                                    <a class="btn" float="left" onclick="image.click()" style="width: 150px; height: 190px; background-color: #1b1919"><p style="text-align:center; padding-top: 50%">Image</p></a>
+                                    <input id="image" type="file" name="uploadedImage" hidden />
+                                </div>
                             </div>
                             <div class="form-group">
                                 <input class="name_of_project" style="margin-bottom: 0px" asp-for="NameOfProject" autocomplete="off" required placeholder="Название проекта" />
