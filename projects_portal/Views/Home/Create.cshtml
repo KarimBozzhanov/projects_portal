@@ -1,7 +1,68 @@
-﻿
-@{
-    ViewData["Title"] = "Create";
-}
+﻿@model projects_portal.ViewModels.CreateModel
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - HZProject</title>
+    <link rel="stylesheet" href="~/css/bootstrap.min.css  />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="content">
+        <div class="container">
+            <form asp-action="Create" asp-controller="Home" enctype="multipart/form-data">
+                <div class="card border border-0">
+                    <div class="card-body">
+                        <div class="user-header">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="username text-bg-dark" style="margin-left: 10px; margin-top: 4px">
+                                        <div class="form-group">
+                                            <input class="name" style="margin-bottom: 0px" asp-for="Name" autocomplete="off" required placeholder="ФИО"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <input class="group" style="margin-bottom: 0px" asp-for="Group" autocomplete="off" required placeholder="Группа"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
 
-<h1>Create</h1>
+                                </div>
+                                <div class="form-group mt-2">
+                                    <a class="git text-light" onclick="file.click()" style="text-decoration: none"><b>APK файл</b><i class="fa-regular fa-file" style="padding-left: 10px"></i></a>
+                                    <input id="file" type="file" name="uploadedApk" hidden />
+                                </div>
+                                <div class="form-group mt-2">
+                                    <a class="download text-light" onclick="file.click()" style="text-decoration: none"><b>Презентация</b><i class="fa-regular fa-folder" style="padding-left: 10px"></i></a>
+                                    <input id="file" type="file" name="uploadedPresentation" hidden />
+                                </div>
+                            </div>
+                            <hr style="background-color: #696969; margin-top: 0px; margin-bottom: 30px" />
+                        </div>
+                        <div class="user-content">
+                            <div class="box">
+                                <a class="btn" float="left" style="width: 150px; height: 190px; background-color: #1b1919"><center>Image</center></a>
+                            </div>
+                            <div class="form-group">
+                                <input class="name_of_project" style="margin-bottom: 0px" asp-for="NameOfProject" autocomplete="off" required placeholder="Название проекта" />
+                            </div>
+                            <div class="form-group">
+                                <textarea style="padding-left: 8px" placeholder="Описание проекта" class="description_text" cols="60" rows="10" asp-for="Description" style="border-radius: 10px"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-dark mt-2 rounded-3 border border-light">Создать пост</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+</html>

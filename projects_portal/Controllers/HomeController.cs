@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -11,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -34,25 +36,32 @@ namespace projects_portal.Controllers
             return View(await db.addProject.OrderByDescending(a => a.TimeOfCreating).ToListAsync());
         }
 
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Create(CreateModel createModel)
+        public async Task<IActionResult> Create(CreateModel createModel, IFormFile uploadedPresentation, IFormFile uploadedApk, IFormFile uploadedImage)
         {
-            createModel.UserName = User.Identity.Name;
-            if (createModel.UserName != null)
+            string presentationPath = "/Presentations/" + uploadedPresentation.FileName;
+            string apkPath = "/apk/" + uploadedApk.FileName;
+            string imagePath = "/Images/" + uploadedImage.FileName;
+            using (var fileStream = new FileStream(app.WebRootPath + presentationPath, FileMode.Create))
             {
-                User user = await db.User.FirstOrDefaultAsync(u => u.Login == createModel.UserName);
-                if (user != null)
-                {
-                    db.addProject.Add(new AddProject { NameOfProject = createModel.NameOfProject, UserName = User.Identity.Name, Name = createModel.Name, TimeOfCreating = DateTime.UtcNow, Group = createModel.Group, Description = createModel.Description, PresentationFile = createModel.PresentationFile, apkFilePath = createModel.apkFilePath, urlGit = createModel.urlGit, siteUrl = createModel.siteUrl, ImagePath = createModel.ImagePath });
-                    await db.SaveChangesAsync();
-                    return RedirectToAction("Index");
-                }
+                await uploadedPresentation.CopyToAsync(fileStream);
             }
-            return NotFound();
+            using (var fileStream = new FileStream(app.WebRootPath + apkPath, FileMode.Create))
+            {
+                await uploadedApk.CopyToAsync(fileStream);
+            }
+            using (var fileStream = new FileStream(app.WebRootPath + imagePath, FileMode.Create))
+            {
+                await uploadedImage.CopyToAsync(fileStream);
+            }
+            db.addProject.Add(new AddProject { NameOfProject = createModel.NameOfProject, UserName = User.Identity.Name, Name = createModel.Name, TimeOfCreating = DateTime.UtcNow, Group = createModel.Group, Description = createModel.Description, PresentationName = uploadedPresentation.FileName, PresentationPath = presentationPath, apkFileName = uploadedApk.FileName, apkFilePath = apkPath, urlGit = createModel.urlGit, siteUrl = createModel.siteUrl, ImageName = uploadedImage.FileName, ImagePath = imagePath });
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
 
         [HttpGet]

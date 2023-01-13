@@ -42,13 +42,110 @@
 }
 
 .card {
-    background-color: #1b1919
+    background-color: #1b1919;
+    margin-bottom: 30px;
 }
 
 .edit {
     background: rgb(195,255,223);
-    background: linear-gradient(90deg, rgba(195,255,223,1) 7%, rgba(10,120,46,1) 100%);
+    background: linear-gradient(90deg, rgba(195,255,223,1) 7%, rgba(7,90,93,1) 100%);
     height: 50%;
     padding: 10px;
+    padding-right: 20px;
+    padding-left: 20px;
+    border-radius: 15px;
+    color: #ffff;
+}
+
+.git {
+    background: rgb(54,54,54);
+    background: linear-gradient(90deg, rgba(54,54,54,1) 0%, rgba(17,23,23,1) 94%, rgba(17,23,23,1) 100%);
+    height: 50%;
+    padding: 10px;
+    padding-right: 20px;
+    padding-left: 20px;
+    border-radius: 15px;
+    color: #ffff;
+    margin-left: 10px;
+}
+
+.download {
+    background: rgb(138,204,141);
+    background: linear-gradient(90deg, rgba(138,204,141,1) 0%, rgba(11,144,66,1) 100%);
+    height: 50%;
+    padding: 10px;
+    padding-right: 20px;
+    padding-left: 20px;
+    border-radius: 15px;
+    color: #ffff;
+    margin-left: 10px;
+}
+
+.box {
+    position: relative;
+    overflow: hidden;
+    width: 150px;
+    height: 190px;
+    float: left;
+    margin-left: 10px;
+    margin-right: 20px
+}
+
+.box img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 150px;
+    height: 190px;
+    object-fit: cover;
     border-radius: 20px;
+}
+
+.title {
+    width: 33%;
+}
+
+.description {
+    width: 33%;
+}
+
+input {
+    display: block;
+    padding: 10px;
+}
+
+.name {
+    width: 60%;
+    border: 1px solid #1b1919;
+    background-color: #1b1919;
+    border-radius: 10px;
+    color: white;
+    outline: none;
+}
+
+.group {
+    width: 30%;
+    border: 1px solid #1b1919;
+    background-color: #1b1919;
+    border-radius: 10px;
+    color: white;
+    outline: none;
+}
+
+.name_of_project {
+    width: 40%;
+    border: 1px solid #1b1919;
+    background-color: #1b1919;
+    border-radius: 10px;
+    color: white;
+    outline: none;
+}
+
+.description_text {
+    border: 1px solid #1b1919;
+    background-color: #1b1919;
+    border-radius: 10px;
+    color: white;
+    outline: none;
 }

@@ -15,7 +15,7 @@ namespace projects_portal.ViewModels
         [Required (ErrorMessage = "Введите описание")]
         public string Description { get; set; }
         public string PresentationName { get; set; }
-        public string PresentationFile { get; set; }
+        public string PresentationPath { get; set; }
         public string apkFileName { get; set; }
         public string apkFilePath { get; set; }
         public string urlGit { get; set; }

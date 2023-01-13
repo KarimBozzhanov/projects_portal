@@ -14,29 +14,36 @@
 
     <div class="content">
         <div class="container">
-            <div class="card border border-0">
-                <div class="card-body">
-                    <div class="user-header">
-                        <div class="row">
-                            <div class="col">
-                                <div class="username text-bg-dark" style="margin-left: 10px; margin-top: 4px">
-                                    <h4 class="text-light" style="margin-bottom: 0px">MrNigga</h4>
-                                    <p style="color: #696969"><b>RPOD4-21R</b></p>
-                                    <hr style="background-color: #696969" />
+            @foreach (var item in Model)
+            {
+                <div class="card border border-0">
+                    <div class="card-body">
+                        <div class="user-header">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="username text-bg-dark" style="margin-left: 10px; margin-top: 4px">
+                                        <h4 class="text-light" style="margin-bottom: 0px">@item.Name</h4>
+                                        <p style="color: #696969"><b>@item.Group</b></p>
+                                    </div>
                                 </div>
+                                <a class="edit" asp-action="editPost" asp-controller="home" style="text-decoration: none"><b>Edit post</b><i class="fa-solid fa-sliders" style="padding-left: 15px"></i></a>
+                                <a class="git" href="#" style="text-decoration: none"><b>GitHub</b><img src="https://cdn-user-icons.flaticon.com/89953/89953949/1673602034293.svg?token=exp=1673602970~hmac=9f848e572706812bd36fb631fbc48157" style="width: 30px; height: 30px; color: #ffff; padding-left: 10px" /></a>
+                                <a class="download" asp-action="editPost" asp-controller="home" style="text-decoration: none"><b>Download</b><i class="fa-regular fa-folder" style="padding-left: 15px"></i></a>
                             </div>
-                            <a class="edit">Edit post <i class="fa-solid fa-sliders"></i></a>
+                            <hr style="background-color: #696969; margin-top: 0px; margin-bottom: 30px" />
                         </div>
+                        <div class="user-content">
+                            <div class="box">
+                                <img style="float: left" src="@Url.Content(item.ImagePath)">
+                            </div>
+                            <p class="title text-light" style="font-size: 25px; margin-bottom: 0px;">@item.NameOfProject</p>
+                            <p class="description line-limit-length text-light" style="display: inline">@item.Description</p>
+                        </div>
+                        <p style="color: #696969; position: absolute; right: 40px; bottom: 0px; margin-top: 5px"><b>@item.TimeOfCreating</b></p>
+                        <a style="color: #ffff; display: inline; position: absolute; right: 20px; bottom: 15px; margin-top: 10px"><i class="fa-regular fa-bookmark"></i></a>
                     </div>
-                    <div class="user-content">
-                        <p class="letter"><img style="width: 150px; height: 190px; float: left; border-radius: 20px; margin-left: 10px; margin-right: 20px" src="#"></p>
-                        <p class="text-light" style="font-size: 25px; margin-bottom: 0px;">Where</p>
-                        <p class="line-limit-length text-light" style="display: inline">Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                    </div>
-                    <p style="color: #696969; position: absolute; right: 40px; bottom: 0px; margin-top: 5px"><b>11/01/2023</b></p>
-                    <a style="color: #ffff; display: inline; position: absolute; right: 20px; bottom: 15px; margin-top: 10px"><i class="fa-regular fa-bookmark"></i></a>
                 </div>
-            </div>
+            }
         </div>
     </div>
 
