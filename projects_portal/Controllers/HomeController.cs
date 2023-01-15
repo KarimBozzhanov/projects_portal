@@ -74,10 +74,10 @@ namespace projects_portal.Controllers
         {
             if (ModelState.IsValid)
             {
-                User user = await db.User.FirstOrDefaultAsync(u => u.Login == loginModel.Login && u.Password == loginModel.Password);
+                User user = await db.User.FirstOrDefaultAsync(u => u.Name == loginModel.Name && u.Password == loginModel.Password);
                 if (user != null)
                 {
-                    await Authenticate(loginModel.Login);
+                    await Authenticate(loginModel.Name);
                     return RedirectToAction("Index");
                 }
                 ModelState.AddModelError("", "Некорректные логин или пароль");
@@ -96,12 +96,12 @@ namespace projects_portal.Controllers
         {
             if (ModelState.IsValid)
             {
-                User user = await db.User.FirstOrDefaultAsync(u => u.Login == registerModel.Login);
+                User user = await db.User.FirstOrDefaultAsync(u => u.Name == registerModel.Name);
                 if (user == null)
                 {
-                    db.User.Add(new User { Login = registerModel.Login, Email = registerModel.Email, Password = registerModel.Password, Role = "Студент" });
+                    db.User.Add(new User { Name = registerModel.Name, Group = registerModel.Group,  Password = registerModel.Password, Role = "Студент" });
                     await db.SaveChangesAsync();
-                    await Authenticate(registerModel.Login);
+                    await Authenticate(registerModel.Name);
                     return RedirectToAction("Index");
                 }
                 else

@@ -1,7 +1,35 @@
-﻿
-@{
-    ViewData["Title"] = "Register";
-}
+﻿@model projects_portal.ViewModels.RegisterModel
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - HZProject</title>
+    <link rel="stylesheet" href="~/css/bootstrap.min.css   />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="content">
+        <div class="container">
+            <div class="registration_header pt-5">
+                <h4 align="center" class="text-light">Welcome to HZ_Project</h4>
+                <h4 align="center" class="text-light">Let's get started</h4>
+                <h4 align="center" class="register_text mt-3"><b>Register</b></h4>
+            </div>
+            <form asp-action="Register" asp-controller="Home" enctype="multipart/form-data">
+               <div class="form-group" align="center">
+                   <input type="text" asp-for="Name" class="register-input" placeholder="Name" autocomplete="off"/>
+                   <input type="text" asp-for="Group" class="register-input" placeholder="Group" autocomplete="off"/>
+                   <input type="password" asp-for="Password" class="register-input" placeholder="Password" autocomplete="off"/>
+                   <input type="password" asp-for="ConfirmPassword" class="register-input" placeholder="Repeat Password" autocomplete="off"/>
+               </div>
+            </form>
+        </div>
+    </div>
 
-<h1>Register</h1>
-
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+</html>

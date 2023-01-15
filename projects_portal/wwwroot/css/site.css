@@ -149,3 +149,23 @@ input {
     color: white;
     outline: none;
 }
+
+.register_text {
+    color: rgb(208,175,210);
+    background-image: linear-gradient(90deg, rgba(208,175,210,1) 0%, rgba(82,14,145,1) 87%);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+}
+
+.register-input {
+    border: none;
+    border-bottom: 2px solid rgb(54,54,54);
+    background-color: transparent;
+    color: inherit;
+    outline: none;
+    width: 20%;
+    padding: 0px;
+    margin-bottom: 10px;
+    color: #ffff;
+    font-weight: 600;
+}

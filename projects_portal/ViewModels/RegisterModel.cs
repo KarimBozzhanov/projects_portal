@@ -5,13 +5,13 @@ namespace projects_portal.ViewModels
 {
     public class RegisterModel
     {
-        [Required(ErrorMessage = "Не указан логин")]
+        [Required(ErrorMessage = "Вы не указали ФИО")]
         [StringLength(20)]
-        public string Login { get; set; }
+        public string Name { get; set; }
 
-        [RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "Некорректный адрес")]
-        public string Email { get; set; }
-        [Required(ErrorMessage = "Не указан пароль")]
+        [Required(ErrorMessage = "Вы не указали группу")]
+        public string Group { get; set; }
+        [Required(ErrorMessage = "Вы не указали пароль")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
