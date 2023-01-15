@@ -165,7 +165,27 @@ input {
     outline: none;
     width: 20%;
     padding: 0px;
-    margin-bottom: 10px;
+    margin-bottom: 13px;
     color: #ffff;
     font-weight: 600;
+}
+
+
+.signUp_button {
+    background: rgb(195,255,223);
+    background: linear-gradient(90deg, rgba(195,255,223,1) 7%, rgba(7,90,93,1) 100%);
+    height: 50%;
+    padding: 5px;
+    padding-right: 10px;
+    padding-left: 10px;
+    border-radius: 10px;
+    color: #ffff;
+    border: none;
+}
+
+.signIn_text {
+    color: rgb(208,175,210);
+    background-image: linear-gradient(90deg, rgba(208,175,210,1) 0%, rgba(82,14,145,1) 87%);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text
 }
