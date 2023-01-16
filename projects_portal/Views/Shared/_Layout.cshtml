@@ -14,9 +14,17 @@
                 <div class="header-item">
                     <h4 class="text-light" style="float: left">HZ_Project</h4>
                 </div>
-                <div align="right" class="header-item">
-                    <h3 class="right_text text-light" style="font-size: 15px"><a asp-action="Login" asp-controller="home" class="text-light" style="text-decoration: none">Login</a> / <a asp-action="Register" asp-controller="home" style="text-decoration: none" class="text-light">Register</a></h3>
-                </div>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <div align="right" class="header-item">
+                        <h3 class="right_text text-light" style="font-size: 15px">@User.Identity.Name / <a asp-action="Logout" asp-controller="home" style="text-decoration: none" class="text-light">Exit</a></h3>
+                    </div>
+                } else
+                {
+                    <div align="right" class="header-item">
+                        <h3 class="right_text text-light" style="font-size: 15px"><a asp-action="Login" asp-controller="home" class="text-light" style="text-decoration: none">Login</a> / <a asp-action="Register" asp-controller="home" style="text-decoration: none" class="text-light">Register</a></h3>
+                    </div>
+                }
             </div>
         </div>
     </header>

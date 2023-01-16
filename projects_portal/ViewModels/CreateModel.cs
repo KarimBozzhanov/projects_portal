@@ -9,7 +9,6 @@ namespace projects_portal.ViewModels
         public string NameOfProject { get; set; }
         [Required(ErrorMessage = "Введите ФИО")]
         public string Name { get; set; }
-        public string UserName { get; set; }
         [Required (ErrorMessage = "Введите номер группы")]
         public string Group { get; set; }
         [Required (ErrorMessage = "Введите описание")]

@@ -102,10 +102,6 @@
     border-radius: 20px;
 }
 
-.title {
-    width: 33%;
-}
-
 .description {
     width: 33%;
 }
@@ -172,8 +168,8 @@ input {
 
 
 .signUp_button {
-    background: rgb(195,255,223);
-    background: linear-gradient(90deg, rgba(195,255,223,1) 7%, rgba(7,90,93,1) 100%);
+    background: rgb(75,170,158);
+    background: linear-gradient(90deg, rgba(75,170,158,1) 33%, rgba(22,95,83,1) 87%);
     height: 50%;
     padding: 5px;
     padding-right: 10px;
@@ -181,6 +177,7 @@ input {
     border-radius: 10px;
     color: #ffff;
     border: none;
+    font-size: 15px;
 }
 
 .signIn_text {

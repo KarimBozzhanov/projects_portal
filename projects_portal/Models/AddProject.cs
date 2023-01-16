@@ -6,7 +6,6 @@ namespace projects_portal.Models
     {
         public int Id { get; set; }
         public string NameOfProject { get; set; }
-        public string UserName { get; set; }
         public string Name { get; set; }
         public DateTime TimeOfCreating { get; set; }
         public string Group { get; set; }

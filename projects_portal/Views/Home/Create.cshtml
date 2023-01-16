@@ -19,24 +19,17 @@
                             <div class="row">
                                 <div class="col">
                                     <div class="username text-bg-dark" style="margin-left: 10px; margin-top: 4px">
-                                        <div class="form-group">
-                                            <input class="name" style="margin-bottom: 0px" asp-for="Name" autocomplete="off" required placeholder="ФИО"/>
-                                        </div>
-                                        <div class="form-group">
-                                            <input class="group" style="margin-bottom: 0px" asp-for="Group" autocomplete="off" required placeholder="Группа"/>
-                                        </div>
+                                        <h4 class="text-light" style="margin-bottom: 0px">@User.Identity.Name</h4>
+                                        <p style="color: #696969"><b>@ViewBag.Group</b></p>
                                     </div>
                                 </div>
-                                <div class="form-group">
-
+                                <div class="form-group mt-2">
+                                    <a class="git text-light" id="apkText" onclick="apk.click()" style="text-decoration: none"><b> APK файл</b><i class="fa-regular fa-file" style="padding-left: 10px"></i></a>
+                                    <input id="apk" type="file" onchange="apkName(this)" name="uploadedApk" accept=".apk" hidden />
                                 </div>
                                 <div class="form-group mt-2">
-                                    <a class="git text-light btn" onclick="apk.click()" style="text-decoration: none"><b>APK файл</b><i class="fa-regular fa-file" style="padding-left: 10px"></i></a>
-                                    <input id="apk" type="file" name="uploadedApk" accept=".apk" hidden />
-                                </div>
-                                <div class="form-group mt-2">
-                                    <a class="download text-light btn" onclick="presentation.click()" style="text-decoration: none"><b>Презентация</b><i class="fa-regular fa-folder" style="padding-left: 10px"></i></a>
-                                    <input id="presentation" type="file" name="uploadedPresentation" accept=".pptx" hidden />
+                                    <a class="download text-light" id="presentationText" onclick="presentation.click()" style="text-decoration: none"><b>Презентация</b><i class="fa-regular fa-folder" style="padding-left: 10px"></i></a>
+                                    <input id="presentation" type="file" onchange="presentationName(this)" name="uploadedPresentation" accept=".pptx" required hidden/>
                                 </div>
                             </div>
                             <hr style="background-color: #696969; margin-top: 0px; margin-bottom: 30px" />
@@ -44,15 +37,19 @@
                         <div class="user-content">
                             <div class="box">
                                 <div class="form-group">
-                                    <a class="btn" float="left" onclick="image.click()" style="width: 150px; height: 190px; background-color: #1b1919; color: #808080"><p style="text-align:center; padding-top: 50%">Image</p></a>
-                                    <input id="image" type="file" name="uploadedImage" accept=".jpg, .png, .jpeg" hidden />
+                                    <a class="btn" float="left" onclick="image.click()" style="width: 150px; height: 190px; background-color: #1b1919; color: #808080"><p style="text-align:center; padding-top: 50%" id="imageText">Image</p></a>
+                                    <input id="image" type="file" onchange="imageName(this)" name="uploadedImage" accept=".jpg, .png, .jpeg" required hidden />
                                 </div>
                             </div>
                             <div class="form-group">
                                 <input class="name_of_project" style="margin-bottom: 0px" asp-for="NameOfProject" autocomplete="off" required placeholder="Название проекта" />
                             </div>
                             <div class="form-group">
-                                <textarea style="padding-left: 8px" placeholder="Описание проекта" class="description_text" cols="60" rows="10" asp-for="Description" style="border-radius: 10px"></textarea>
+                                <textarea style="padding-left: 8px" placeholder="Описание проекта" required class="description_text" cols="60" rows="10" asp-for="Description" style="border-radius: 10px"></textarea>
+                            </div>
+                            <div class="form-group" align="right">
+                                <input class="name_of_project" style="margin-bottom: 0px; width: 20%; display: inline" asp-for="siteUrl" autocomplete="off" placeholder="URL сайта" />
+                                <p style="float: right; padding-left: 20px; padding-top: 8px; padding-right: 10px; color: #696969">@DateTime.UtcNow</p>
                             </div>
                         </div>
                         <div class="form-group">
@@ -66,6 +63,6 @@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/site.js asp-append-version="true"></script>
 </body>
 </html>

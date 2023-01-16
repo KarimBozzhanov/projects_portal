@@ -10,7 +10,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-    <a asp-action="Create" class="fixed-button"><i class="fa-solid fa-plus"></i></a>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <a asp-action="Create" asp-controller="Home" asp-route-userName="@User.Identity.Name" class="fixed-button"><i class="fa-solid fa-plus"></i></a>
+    }
 
     <div class="content">
         <div class="container">
@@ -26,7 +29,7 @@
                                         <p style="color: #696969"><b>@item.Group</b></p>
                                     </div>
                                 </div>
-                                <a class="edit" asp-action="editPost" asp-controller="home" style="text-decoration: none"><b>Edit post</b><i class="fa-solid fa-sliders" style="padding-left: 15px"></i></a>
+                                <a class="edit" asp-action="editPost" asp-controller="home" asp-route-id="@item.Id" style="text-decoration: none"><b>Edit post</b><i class="fa-solid fa-sliders" style="padding-left: 15px"></i></a>
                                 <a class="git" href="#" style="text-decoration: none"><b>GitHub</b><img src="https://cdn-user-icons.flaticon.com/89953/89953949/1673602034293.svg?token=exp=1673602970~hmac=9f848e572706812bd36fb631fbc48157" style="width: 30px; height: 30px; color: #ffff; padding-left: 10px" /></a>
                                 <a class="download" asp-action="editPost" asp-controller="home" style="text-decoration: none"><b>Download</b><i class="fa-regular fa-folder" style="padding-left: 15px"></i></a>
                             </div>
