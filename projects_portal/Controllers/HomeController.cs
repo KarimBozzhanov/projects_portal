@@ -188,7 +188,7 @@ namespace projects_portal.Controllers
                 AddProject project = await db.addProject.FirstOrDefaultAsync(p => p.Id == id);
                 if (project != null)
                 {
-                    return View(project);
+                    return View();
                 }
             }
             return NotFound();

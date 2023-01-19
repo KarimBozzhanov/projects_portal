@@ -6,20 +6,11 @@
     }
 }
 
-function editPresentation(newPresentationInput) {
-    var presentation = newPresentationInput.files;
-    var presentationText = document.getElementById("presentationText");
-    for (var i = 0; i < presentation.length; i++) {
-        presentationText.innerHTML = presentation[i].name;  
-    }
-}
-
 function apkName(apkInput) {
     var apk = apkInput.files;
     var apkText = document.getElementById("apkText");
     for (var i = 0; i < apk.length; i++) {
         apkText.innerHTML = apk[i].name;
-        document.getElementById("apkEdit").value = apk[i].name;
     }
 }
 
@@ -35,11 +26,4 @@ function imageName(imageInput) {
         }
         imageText.innerHTML = image[i].name;
     }
-}
-
-function addGit() {
-    var gitInput = document.getElementById("gitInput");
-    var gitButton = document.getElementById("gitButton");
-    gitButton.style.display = "none";
-    gitInput.setAttribute('type', 'text');
 }
