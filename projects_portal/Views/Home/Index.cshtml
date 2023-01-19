@@ -29,7 +29,7 @@
                                         <p style="color: #696969"><b>@item.Group</b></p>
                                     </div>
                                 </div>
-                                <a class="edit" asp-action="editPost" asp-controller="home" asp-route-id="@item.Id" style="text-decoration: none"><b>Edit post</b><i class="fa-solid fa-sliders" style="padding-left: 15px"></i></a>
+                                <a class="edit" asp-action="editPost" asp-controller="home" asp-route-id="@item.Id" asp-route-userName="@item.Name" style="text-decoration: none"><b>Edit post</b><i class="fa-solid fa-sliders" style="padding-left: 15px"></i></a>
                                 <a class="git" href="#" style="text-decoration: none"><b>GitHub</b><img src="https://cdn-user-icons.flaticon.com/89953/89953949/1673602034293.svg?token=exp=1673602970~hmac=9f848e572706812bd36fb631fbc48157" style="width: 30px; height: 30px; color: #ffff; padding-left: 10px" /></a>
                                 <a class="download" asp-action="editPost" asp-controller="home" style="text-decoration: none"><b>Download</b><i class="fa-regular fa-folder" style="padding-left: 15px"></i></a>
                             </div>
