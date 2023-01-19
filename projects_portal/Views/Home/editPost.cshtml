@@ -1,7 +1,87 @@
-﻿
-@{
-    ViewData["Title"] = "editPost";
-}
+﻿@model projects_portal.Models.AddProject
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - HZProject</title>
+    <link rel="stylesheet" href="~/css/bootstrap.min.css   />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="content">
+        <div class="container">
+                <div class="card border border-0">
+                    <div class="card-body">
+                        <form asp-action="editPost" asp-controller="Home" enctype="multipart/form-data">
+                        <div class="user-header">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="username text-bg-dark" style="margin-left: 10px; margin-top: 4px">
+                                        <h4 class="text-light" style="margin-bottom: 0px">@Model.Name</h4>
+                                        <input type="text" value="@Model.Name" asp-for="Name" hidden />
+                                        <p style="color: #696969"><b>@Model.Group</b></p>
+                                        <input type="text" value="@Model.Group" asp-for="Group" hidden />
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    @if (Model.urlGit == null)
+                                    {
+                                        <a class="git text-light" id="gitButton" onclick="addGit()"><b>Add Git <img src="https://cdn-user-icons.flaticon.com/89953/89953949/1673602034293.svg?token=exp=1673602970~hmac=9f848e572706812bd36fb631fbc48157" style="width: 30px; height: 30px; color: #ffff; padding-left: 10px" /></b></a>
+                                        <input id="gitInput" class="gitInputClass" type="hidden" asp-for="urlGit" autocomplete="off" placeholder="Ссылка на репозиторий GIT" />
+                                    } else
+                                    {
+                                        <input class="name_of_project" style="margin-bottom: 0px" asp-for="urlGit" autocomplete="off" placeholder="Ссылка на репозиторий GIT" />
+                                    }
+                                </div>
+                                <div class="form-group mt-2">
+                                    @if(Model.apkFilePath == null)
+                                    {
+                                        <a class="git text-light" id="apkText" onclick="apkEdit.click()" style="text-decoration: none"><b>Add APK</b><i class="fa-regular fa-file" style="padding-left: 10px"></i></a>
+                                    } else
+                                    {
+                                        <a class="git text-light" id="apkText" onclick="apkEdit.click()" style="text-decoration: none"><b>@Model.apkFileName</b><i class="fa-regular fa-file" style="padding-left: 10px"></i></a>
+                                    }
+                                    <input id="apkEdit" type="file" onchange="apkName(this)" value="@Model.apkFileName" name="uploadedApk" accept=".apk" hidden />
+                                </div>
+                                <div class="form-group mt-2">
+                                    <a class="download text-light" id="presentationText" onclick="presentationEdit.click()" style="text-decoration: none"><b>@Model.PresentationName</b><i class="fa-regular fa-folder" style="padding-left: 10px"></i></a>
+                                    <input id="presentationEdit" type="file" onchange="editPresentation(this)" value="@Model.PresentationPath" name="uploadedPresentation" accept=".pptx" hidden />
+                                </div>
+                            </div>
+                            <hr style="background-color: #696969; margin-top: 0px; margin-bottom: 30px" />
+                        </div>
+                        <div class="user-content">
+                            <div class="box">
+                                <div class="form-group">
+                                    <a class="btn" float="left" onclick="image.click()" style="width: 150px; height: 190px; background-color: #1b1919; color: #808080"><p style="text-align:center; padding-top: 50%" id="imageText">Image</p></a>
+                                    <input id="image" type="file" onchange="imageName(this)" name="uploadedImage" accept=".jpg, .png, .jpeg" hidden />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input class="name_of_project" style="margin-bottom: 0px" asp-for="NameOfProject" autocomplete="off" required placeholder="Название проекта" />
+                            </div>
+                            <div class="form-group">
+                                <textarea style="padding-left: 8px" placeholder="Описание проекта" required class="description_text" cols="60" rows="10" asp-for="Description" style="border-radius: 10px"></textarea>
+                            </div>
+                            <div class="form-group" align="right">
+                                <input class="name_of_project" style="margin-bottom: 0px; width: 20%; display: inline; margin-right: 20px" asp-for="siteUrl" autocomplete="off" placeholder="URL сайта" />
+                                <a class="btn-delete text-light" asp-action="projectDelete" asp-controller="home" asp-route-id="@Model.Id">Delete</a>
+                                <input value="@Model.TimeOfCreating" type="text" asp-for="TimeOfCreating" hidden />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn mt-2 rounded-3" style="background-color: #1b1919; color: #808080" align="right">Создать пост</button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+        </div>
+    </div>
 
-<h1>editPost</h1>
-
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js asp-append-version="true"></script>
+</body>
+</html>
