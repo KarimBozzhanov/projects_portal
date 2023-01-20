@@ -16,7 +16,6 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\Presentations\" />
-    <Folder Include="wwwroot\Images\" />
     <Folder Include="wwwroot\apk\" />
   </ItemGroup>
 

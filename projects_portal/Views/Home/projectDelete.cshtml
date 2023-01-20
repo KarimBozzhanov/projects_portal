@@ -15,7 +15,7 @@
             <div class="card border border-0">
                 <div class="card-body">
                     <form asp-action="projectDelete" asp-controller="home">
-                        <button class="btn-delete text-light" type="submit" asp-route-id="@Model.Id">Да</button>
+                        <button class="btn-confirmDelete text-light" type="submit" asp-route-id="@Model.Id">Да</button>
                         <a class="btn-notDelete" asp-action="Index" asp-controller="home">Нет</a>
                     </form>
                 </div>

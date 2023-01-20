@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using projects_portal.Models;
@@ -172,11 +174,55 @@ namespace projects_portal.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> editPost(AddProject project)
+        public async Task<IActionResult> editPost(AddProject project, IFormFile uploadedApk, IFormFile uploadedImage, IFormFile uploadedPresentation)
         {
-            db.addProject.Update(project);
-            await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+            if (uploadedApk != null || uploadedImage != null || uploadedPresentation != null)
+            {
+                var projectUpdate = db.addProject.Where(a => a.Id == project.Id).AsQueryable();
+                if (uploadedApk != null)
+                {
+                    string apkPath = "/apk/" + uploadedApk.FileName;
+                    using (var fileStream = new FileStream(app.WebRootPath + apkPath, FileMode.Create))
+                    {
+                        await uploadedApk.CopyToAsync(fileStream);
+                    }
+                    projectUpdate.FirstOrDefault().apkFileName = uploadedApk.FileName;
+                    projectUpdate.FirstOrDefault().apkFilePath = apkPath;
+                }
+                if (uploadedImage != null)
+                {
+                    string imagePath = "/Images/" + uploadedImage.FileName;
+                    using (var fileStream = new FileStream(app.WebRootPath + imagePath, FileMode.Create))
+                    {
+                        await uploadedImage.CopyToAsync(fileStream);
+                    }
+                    projectUpdate.FirstOrDefault().ImageName = uploadedImage.FileName;
+                    projectUpdate.FirstOrDefault().ImagePath = imagePath;
+                }
+                if (uploadedPresentation != null)
+                {
+                    string presentationPath = "/Presentations/" + uploadedPresentation.FileName;
+                    using (var fileStream = new FileStream(app.WebRootPath + presentationPath, FileMode.Create))
+                    {
+                        await uploadedPresentation.CopyToAsync(fileStream);
+                    }
+                    projectUpdate.FirstOrDefault().PresentationName = uploadedPresentation.FileName;
+                    projectUpdate.FirstOrDefault().PresentationPath = presentationPath;
+                }
+                projectUpdate.FirstOrDefault().NameOfProject = project.NameOfProject;
+                projectUpdate.FirstOrDefault().Description = project.Description;
+                db.addProject.UpdateRange(projectUpdate);
+                await db.SaveChangesAsync();
+                return RedirectToAction("Index");
+            } else
+            {
+                var projects = db.addProject.Where(a => a.Id == project.Id).AsQueryable();
+                projects.Where(a => a.Id == project.Id).FirstOrDefault().NameOfProject = project.NameOfProject;
+                projects.Where(a => a.Id == project.Id).FirstOrDefault().Description = project.Description;
+                db.addProject.UpdateRange(projects);
+                await db.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
         }
 
         [HttpGet]

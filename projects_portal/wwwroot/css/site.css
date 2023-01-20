@@ -197,6 +197,7 @@ input {
     padding-top: 10px;
     padding-bottom: 10px;
     border-radius: 15px;
+    margin-right: 10px;
 }
 
 .btn-notDelete {
@@ -216,4 +217,66 @@ input {
     border-radius: 10px;
     color: white;
     margin-right: 10px;
+}
+
+.site-text {
+    color: rgb(125,74,207);
+    background-image: linear-gradient(90deg, rgba(125,74,207,1) 47%, rgba(112,59,213,1) 65%);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    margin-right: 30px;
+}
+
+.btn-save {
+    text-decoration: none;
+    padding-right: 20px;
+    padding-left: 20px;
+    background: rgb(51,221,196);
+    background: linear-gradient(90deg, rgba(51,221,196,1) 4%, rgba(44,213,188,1) 13%, rgba(32,200,176,1) 22%, rgba(23,195,169,1) 32%, rgba(17,181,156,1) 42%, rgba(13,177,151,1) 52%, rgba(12,179,152,1) 61%, rgba(10,167,142,1) 76%, rgba(6,159,135,1) 89%);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 15px;
+    border: none;
+}
+
+.btn-confirmDelete {
+    text-decoration: none;
+    padding-right: 20px;
+    padding-left: 20px;
+    background: rgb(190,62,49);
+    background: linear-gradient(90deg, rgba(190,62,49,1) 2%, rgba(198,48,48,1) 5%, rgba(182,46,26,1) 17%, rgba(177,35,12,1) 30%, rgba(166,28,4,1) 51%);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 15px;
+}
+
+.boxEdit {
+    position: relative;
+    overflow: hidden;
+    width: 150px;
+    height: 190px;
+    float: left;
+}
+
+.boxEdit img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 150px;
+    height: 190px;
+    object-fit: cover;
+    border-radius: 20px;
+}
+
+.presentation {
+    background: rgb(221,148,51);
+    background: linear-gradient(90deg, rgba(221,148,51,1) 4%, rgba(203,140,44,1) 13%, rgba(223,134,51,1) 25%, rgba(215,126,42,1) 32%, rgba(210,116,33,1) 42%, rgba(203,114,31,1) 52%, rgba(213,110,13,1) 61%, rgba(215,97,24,1) 76%, rgba(214,89,21,1) 89%);
+    height: 50%;
+    padding: 10px;
+    padding-right: 20px;
+    padding-left: 20px;
+    border-radius: 15px;
+    color: #ffff;
+    margin-left: 10px;
 }
