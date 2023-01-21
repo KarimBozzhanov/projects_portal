@@ -253,6 +253,43 @@ namespace projects_portal.Controllers
             return NotFound();
         }
 
+        [HttpPost]
+        public async Task<IActionResult> favoritePost (string userName, int postId)
+        {
+            User user = await db.User.FirstOrDefaultAsync(u => u.Name == userName);
+            if (user != null)
+            {
+                db.favorite.Add(new favorite { userId = user.Id, userNameFavorite = userName, postFavoriteId = postId });
+                await db.SaveChangesAsync();
+                return RedirectToAction("Index");
+            } 
+            return NotFound();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> deleteFavoritePost(string userNameFavorite, int? postFavoriteId)
+        {
+            if (postFavoriteId != null)
+            {
+                AddProject project = await db.addProject.FirstOrDefaultAsync(a => a.Id == postFavoriteId);
+                if (project != null)
+                {
+                    User user = await db.User.FirstOrDefaultAsync(u => u.Name == userNameFavorite);
+                    if (user != null)
+                    {
+                        favorite favoritePost = await db.favorite.FirstOrDefaultAsync(f => f.userNameFavorite == user.Name && f.postFavoriteId == project.Id);
+                        if (favoritePost != null)
+                        {
+                            db.Entry(favoritePost).State = EntityState.Deleted;
+                            await db.SaveChangesAsync();
+                        }
+                    }
+                }
+            }
+            return NotFound();
+        }
+
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

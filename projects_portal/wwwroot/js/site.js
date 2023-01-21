@@ -30,13 +30,27 @@ function addSite() {
     siteInput.setAttribute('type', 'text');
 }
 
-function imageEdit(imageInput) {
+function imageEdit(editImageInput) {
     var imageBlock = document.getElementById("imageBlock");
     var imageButton = document.getElementById("imageButton");
     var imageText = document.getElementById("imageText");
-    var image = imageInput.files;
+    var image = editImageInput.files;
     imageBlock.style.display = "none";
     imageButton.style.display = "block";
+    for (var i = 0; image.length; i++) {
+        if (image[i].name.length > 30) {
+            imageText.style.paddingTop = "0%";
+        }
+        else {
+            imageText.style.paddingTop = "50%";
+        }
+        imageText.innerHTML = image[i].name;
+    }
+}
+
+function imageName(imageInput) {
+    var imageText = document.getElementById("imageText");
+    var image = imageInput.files;
     for (var i = 0; image.length; i++) {
         if (image[i].name.length > 30) {
             imageText.style.paddingTop = "0%";
