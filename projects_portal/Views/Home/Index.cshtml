@@ -1,4 +1,4 @@
-﻿@model IEnumerable<projects_portal.Models.AddProject>
+﻿@model IEnumerable<projects_portal.Models.Projects>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,10 +29,22 @@
                                         <p style="color: #696969"><b>@item.Group</b></p>
                                     </div>
                                 </div>
-                                <a class="edit" asp-action="editPost" asp-controller="home" asp-route-id="@item.Id" asp-route-userName="@item.Name" style="text-decoration: none"><b>Редактировать</b><i class="fa-solid fa-sliders" style="padding-left: 15px"></i></a>
-                                <a class="git text-light" href="@item.urlGit" style="text-decoration: none"><b>GitHub</b><img src="/Images/github.png" style="width: 35px; height:25px; padding-left: 10px; margin-bottom: 5px" /></a>
-                                <a class="presentation text-light" id="presentationText" onclick="presentationEdit.click()" style="text-decoration: none"><b>Презентация</b><i class="fa-regular fa-folder" style="padding-left: 10px"></i></a>
-                                <a class="download" asp-action="editPost" asp-controller="home" style="text-decoration: none"><b>Скачать</b><i class="fa-regular fa-folder" style="padding-left: 15px"></i></a>
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    @if (item.Name == User.Identity.Name || ViewData["role"].Equals("А"))
+                                    {
+                                        <a class="edit" asp-action="editPost" asp-controller="home" asp-route-id="@item.Id" asp-route-userName="@item.Name" style="text-decoration: none"><b>Редактировать</b><i class="fa-solid fa-sliders" style="padding-left: 15px"></i></a>
+                                    }
+                                    @if (ViewData["role"].Equals("П") || ViewData["role"].Equals("А"))
+                                    {
+                                        <a class="git text-light" href="@item.urlGit" style="text-decoration: none"><b>GitHub</b><img src="/Images/github.png" style="width: 35px; height:25px; padding-left: 10px; margin-bottom: 5px" /></a>
+                                    }
+                                }
+                                <a class="presentation text-light" id="presentationText" href="@item.PresentationPath" download="@item.PresentationName" style="text-decoration: none"><b>Презентация</b><i class="fa-regular fa-folder" style="padding-left: 10px"></i></a>
+                                @if (item.apkFilePath != null)
+                                {
+                                    <a class="download" href="@item.apkFilePath" download="@item.apkFileName" style="text-decoration: none"><b>Скачать</b><i class="fa-regular fa-folder" style="padding-left: 15px"></i></a>
+                                }
                             </div>
                             <hr style="background-color: #696969; margin-top: 0px; margin-bottom: 30px" />
                         </div>
@@ -46,9 +58,15 @@
                         <div class="user-footer">
                             <a class="site-url text-light" href="@item.siteUrl">@item.siteUrl</a>
                             <p style="color: #696969; display: inline; margin-right: 10px"><b>@item.TimeOfCreating</b></p>
-                            <form asp-action="favoritePost" asp-controller="home" style="float: right" asp-route-userName="@User.Identity.Name" asp-route-postId="@item.Id">
-                                <button class="favoriteButton" type="submit" style="color: #ffff"><i class="fa-regular fa-bookmark"></i></button>
-                            </form>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                @if (ViewData["role"].Equals("П") || ViewData["role"].Equals("А"))
+                                {
+                                <form asp-action="favoritePost" asp-controller="home" style="float: right" asp-route-userName="@User.Identity.Name" asp-route-postId="@item.Id">
+                                    <button class="favoriteButton" type="submit" style="color: #ffff"><i class="fa-regular fa-bookmark"></i></button>
+                                </form>
+                                }   
+                            }
                         </div>
                     </div>
                 </div>

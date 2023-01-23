@@ -13,14 +13,29 @@
     <div class="content">
         <div class="container">
             <div class="registration_header pt-5">
-                <h4 align="center" class="text-light">Welcome to HZ_Project</h4>
+                <h4 align="center" class="text-light">Welcome to MonoLOG</h4>
                 <h4 align="center" class="text-light">Let's get started</h4>
-                <h4 align="center" class="register_text mt-3"><b>Register</b></h4>
             </div>
             <form asp-action="Register" asp-controller="Home" enctype="multipart/form-data">
                <div class="form-group" align="center">
+                   <div class="studentCheckBox" align="center">
+                        <label class="t-radio__control">
+                            <input type="radio" name="role" onclick="studentButton()" value="С" checked="checked" class="t-radio js-tilda-rule">
+                            <div class="radio_button" id="student_btn" style="position: relative; z-index: 99">
+                                <b class="radio_text">Student</b>
+                            </div>
+                        </label>
+                   </div>
+                    <div class="teacherCheckBox" style="display: inline" align="justify">
+                        <label class="t-radio__control">
+                            <input type="radio" name="role" onclick="teacherButton()" value="П" data-tilda-req="1" class="t-radio js-tilda-rule">
+                            <div class="radio_button" id="teacher_btn" style="position: relative; z-index: 98">
+                                <b class="radio_text">Teacher</b>
+                            </div>
+                        </label>
+                    </div>
                    <input type="text" asp-for="Name" class="register-input" placeholder="Name" autocomplete="off"/>
-                   <input type="text" asp-for="Group" class="register-input" placeholder="Group" autocomplete="off"/>
+                   <input type="text" asp-for="Group" style="display: block" id="groupInput" class="register-input" placeholder="Group" autocomplete="off"/>
                    <input type="password" asp-for="Password" class="register-input" placeholder="Password" autocomplete="off"/>
                    <input type="password" asp-for="ConfirmPassword" class="register-input" placeholder="Repeat Password" autocomplete="off"/>
                </div>

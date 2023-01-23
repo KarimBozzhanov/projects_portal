@@ -69,6 +69,18 @@
     margin-left: 10px;
 }
 
+.gitEdit {
+    background: rgb(54,54,54);
+    background: linear-gradient(90deg, rgba(54,54,54,1) 0%, rgba(17,23,23,1) 94%, rgba(17,23,23,1) 100%);
+    height: 50%;
+    padding: 11px;
+    padding-right: 20px;
+    padding-left: 20px;
+    border-radius: 15px;
+    color: #ffff;
+    margin-left: 10px;
+}
+
 .download {
     background: rgb(138,204,141);
     background: linear-gradient(90deg, rgba(138,204,141,1) 0%, rgba(11,144,66,1) 100%);
@@ -209,6 +221,7 @@ input {
     padding-top: 10px;
     padding-bottom: 10px;
     border-radius: 15px;
+    border: none
 }
 
 .gitInputClass {
@@ -248,6 +261,7 @@ input {
     padding-top: 10px;
     padding-bottom: 10px;
     border-radius: 15px;
+    border: none;
 }
 
 .boxEdit {
@@ -281,6 +295,18 @@ input {
     margin-left: 10px;
 }
 
+.presentationEdit {
+    background: rgb(221,148,51);
+    background: linear-gradient(90deg, rgba(221,148,51,1) 4%, rgba(203,140,44,1) 13%, rgba(223,134,51,1) 25%, rgba(215,126,42,1) 32%, rgba(210,116,33,1) 42%, rgba(203,114,31,1) 52%, rgba(213,110,13,1) 61%, rgba(215,97,24,1) 76%, rgba(214,89,21,1) 89%);
+    height: 50%;
+    padding: 10px;
+    padding-right: 20px;
+    padding-left: 20px;
+    border-radius: 15px;
+    color: #ffff;
+    margin-left: 10px;
+}
+
 .user-footer {
     position: absolute;
     right: 10px;
@@ -298,4 +324,40 @@ input {
     -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;
     margin-right: 20px;
+}
+
+.studentCheckBox {
+    display: inline;
+    margin-right: -10px;
+}
+
+.teacherCheckBox {
+    display: inline;
+}
+
+input[type=radio] {
+    opacity: 0;
+    visablity: hidden;
+}
+
+.radio_button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgb(29,29,29);
+    background: linear-gradient(90deg, rgba(29,29,29,1) 47%, rgba(24,24,24,1) 65%);
+    padding: 8px 20px;
+    border-radius: 10px;
+    font-size: 18px;
+}
+
+input[type=radio]:checked + .radio_button{
+    background: #2D2D2D
+}
+
+.radio_text {
+    color: rgb(208,175,210);
+    background-image: linear-gradient(90deg, rgba(208,175,210,1) 0%, rgba(82,14,145,1) 87%);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
 }

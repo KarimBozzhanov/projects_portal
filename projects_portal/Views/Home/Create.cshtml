@@ -23,21 +23,31 @@
                                         <p style="color: #696969"><b>@ViewBag.Group</b></p>
                                     </div>
                                 </div>
-                                <div class="form-group mt-2">
-                                    <a class="git text-light" id="apkText" onclick="apk.click()" style="text-decoration: none"><b> APK файл</b><i class="fa-regular fa-file" style="padding-left: 10px"></i></a>
-                                    <input id="apk" type="file" onchange="apkName(this)" name="uploadedApk" accept=".apk" hidden />
+                                <div class="form-group mt-2" id="gitClass">
+                                    <a class="gitEdit text-light" id="gitButton" onclick="addGit()"><b>Добавить Git <img src="/Images/github.png" style="width: 30px; height:25px; padding-left: 5px; margin-bottom: 5px" /></b></a>
+                                    <input id="gitInput" class="gitInputClass" type="hidden" asp-for="urlGit" autocomplete="off" placeholder="Ссылка на репозиторий GIT" />
                                 </div>
                                 <div class="form-group mt-2">
-                                    <a class="download text-light" id="presentationText" onclick="presentation.click()" style="text-decoration: none"><b>Презентация</b><i class="fa-regular fa-folder" style="padding-left: 10px"></i></a>
-                                    <input id="presentation" type="file" onchange="presentationName(this)" name="uploadedPresentation" accept=".pptx" required hidden/>
+                                    <a class="presentationEdit text-light" id="presentationText" onclick="presentationEdit.click()" style="text-decoration: none"><b>Презентация</b><i class="fa-regular fa-folder" style="padding-left: 10px"></i></a>
+                                    <input id="presentationEdit" type="file" onchange="presentationName(this)" name="uploadedPresentation" accept=".pptx" hidden />
+                                </div>
+                                <div class="form-group mt-2">
+                                    <a class="download text-light" id="apkText" onclick="apkEdit.click()" style="text-decoration: none"><b>ДAPK-файл</b><i class="fa-regular fa-file" style="padding-left: 10px"></i></a>
+                                    <input id="apkEdit" type="file" onchange="apkName(this)" name="uploadedApk" accept=".apk" hidden />
                                 </div>
                             </div>
                             <hr style="background-color: #696969; margin-top: 0px; margin-bottom: 30px" />
                         </div>
                         <div class="user-content">
+                            <div class="validation text-light" style="margin-left: 35%" asp-validation-summary="ModelOnly"></div>
                             <div class="box">
                                 <div class="form-group">
-                                    <a class="btn" float="left" onclick="image.click()" style="width: 150px; height: 190px; background-color: #1b1919; color: #808080"><p style="text-align:center; padding-top: 50%" id="imageText">Image</p></a>
+                                    <a class="btn" float="left" id="imageBtn" onclick="image.click()" style="width: 150px; height: 190px; background-color: #1b1919; color: #808080; display: block"><p style="text-align:center; padding-top: 50%" id="imageText">Добавить изображение</p></a>
+                                    <div class="boxEdit" style="display: none" id="imageBlock">
+                                        <a float="left" onclick="image.click()">
+                                            <img style="float: left" id="imageSrc" src="#">
+                                        </a>
+                                    </div>
                                     <input id="image" type="file" onchange="imageName(this)" name="uploadedImage" accept=".jpg, .png, .jpeg" required hidden />
                                 </div>
                             </div>
@@ -49,7 +59,7 @@
                             </div>
                             <div class="form-group" align="right">
                                 <input class="name_of_project" style="margin-bottom: 0px; width: 20%; display: inline" asp-for="siteUrl" autocomplete="off" placeholder="URL сайта" />
-                                <p style="float: right; padding-left: 20px; padding-top: 8px; padding-right: 10px; color: #696969">@DateTime.UtcNow</p>
+                                <p style="float: right; padding-left: 20px; padding-top: 8px; padding-right: 10px; color: #696969">@DateTime.Now</p>
                             </div>
                         </div>
                         <div class="form-group">

@@ -31,33 +31,42 @@ function addSite() {
 }
 
 function imageEdit(editImageInput) {
-    var imageBlock = document.getElementById("imageBlock");
-    var imageButton = document.getElementById("imageButton");
-    var imageText = document.getElementById("imageText");
-    var image = editImageInput.files;
-    imageBlock.style.display = "none";
-    imageButton.style.display = "block";
-    for (var i = 0; image.length; i++) {
-        if (image[i].name.length > 30) {
-            imageText.style.paddingTop = "0%";
-        }
-        else {
-            imageText.style.paddingTop = "50%";
-        }
-        imageText.innerHTML = image[i].name;
+    var reader = new FileReader();
+    var image = editImageInput.files[0];
+    var imageChange = document.getElementById("imageChange");
+    reader.readAsDataURL(image);
+    reader.onload = function (p) {
+        imageChange.src = p.target.result;
     }
 }
 
 function imageName(imageInput) {
-    var imageText = document.getElementById("imageText");
-    var image = imageInput.files;
-    for (var i = 0; image.length; i++) {
-        if (image[i].name.length > 30) {
-            imageText.style.paddingTop = "0%";
-        }
-        else {
-            imageText.style.paddingTop = "50%";
-        }
-        imageText.innerHTML = image[i].name;
+    var reader = new FileReader();
+    var image = imageInput.files[0];
+    var imageBlock = document.getElementById("imageBlock");
+    var imageBtn = document.getElementById("imageBtn");
+    imageBtn.style.display = "none"
+    imageBlock.style.display = "block";
+    reader.readAsDataURL(image);
+    reader.onload = function (e) {
+        document.querySelector("#imageSrc").src = e.target.result;
     }
+}
+
+function studentButton() {
+    var studentBtn = document.getElementById("student_btn");
+    var teacherBtn = document.getElementById("teacher_btn");
+    var groupInput = document.getElementById("groupInput")
+    groupInput.style.display = "block"
+    studentBtn.style.zIndex = "99";
+    teacherBtn.style.zIndex = "98";
+}
+
+function teacherButton() {
+    var teacherBtn = document.getElementById("teacher_btn");
+    var studentBtn = document.getElementById("student_btn");
+    var groupInput = document.getElementById("groupInput")
+    groupInput.style.display = "none";
+    teacherBtn.style.zIndex = "99";
+    studentBtn.style.zIndex = "98";
 }

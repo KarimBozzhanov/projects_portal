@@ -6,10 +6,7 @@ namespace projects_portal.ViewModels
     public class RegisterModel
     {
         [Required(ErrorMessage = "Вы не указали ФИО")]
-        [StringLength(20)]
         public string Name { get; set; }
-
-        [Required(ErrorMessage = "Вы не указали группу")]
         public string Group { get; set; }
         [Required(ErrorMessage = "Вы не указали пароль")]
         [DataType(DataType.Password)]

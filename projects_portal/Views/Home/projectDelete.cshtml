@@ -1,4 +1,4 @@
-﻿@model projects_portal.Models.AddProject;
+﻿@model projects_portal.Models.Projects;
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,7 +14,7 @@
         <div class="container">
             <div class="card border border-0">
                 <div class="card-body">
-                    <form asp-action="projectDelete" asp-controller="home">
+                    <form asp-action="projectDelete" asp-controller="home" align=center>
                         <button class="btn-confirmDelete text-light" type="submit" asp-route-id="@Model.Id">Да</button>
                         <a class="btn-notDelete" asp-action="Index" asp-controller="home">Нет</a>
                     </form>

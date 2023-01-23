@@ -1,4 +1,4 @@
-﻿@model projects_portal.Models.AddProject
+﻿@model projects_portal.Models.Projects
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,21 +28,22 @@
                                 <div class="form-group mt-2" id="gitClass">
                                     @if (Model.urlGit == null)
                                     {
-                                        <a class="git text-light" id="gitButton" onclick="addGit()"><b>Добавить Git <img src="/Images/github.png" style="width: 30px; height:25px; padding-left: 5px; margin-bottom: 5px"/></b></a>
+                                        <a class="gitEdit text-light" id="gitButton" onclick="addGit()"><b>Добавить Git <img src="/Images/github.png" style="width: 30px; height:25px; padding-left: 5px; margin-bottom: 5px"/></b></a>
                                         <input id="gitInput" class="gitInputClass" type="hidden" asp-for="urlGit" autocomplete="off" placeholder="Ссылка на репозиторий GIT" />
                                     } else
                                     {
-                                        <input class="name_of_project" style="margin-bottom: 0px" asp-for="urlGit" autocomplete="off" placeholder="Ссылка на репозиторий GIT" />
+                                        <a class="gitEdit text-light" id="gitButton" onclick="addGit()"><b>Edit Git <img src="/Images/github.png" style="width: 30px; height:25px; padding-left: 5px; margin-bottom: 5px"/></b></a>
+                                        <input id="gitInput" class="gitInputClass" type="hidden" asp-for="urlGit" autocomplete="off" placeholder="Ссылка на репозиторий GIT" />
                                     }
                                 </div>
                                 <div class="form-group mt-2">
                                     @if (Model.PresentationPath == null)
                                     {
-                                        <a class="presentation text-light" id="presentationText" onclick="presentationEdit.click()" style="text-decoration: none"><b>Добавить презентацию</b><i class="fa-regular fa-folder" style="padding-left: 10px"></i></a>
+                                        <a class="presentationEdit text-light" id="presentationText" onclick="presentationEdit.click()" style="text-decoration: none"><b>Добавить презентацию</b><i class="fa-regular fa-folder" style="padding-left: 10px"></i></a>
                                     }
                                     else
                                     {
-                                        <a class="presentation text-light" id="presentationText" onclick="presentationEdit.click()" style="text-decoration: none"><b>@Model.PresentationName</b><i class="fa-regular fa-folder" style="padding-left: 10px"></i></a>
+                                        <a class="presentationEdit text-light" id="presentationText" onclick="presentationEdit.click()" style="text-decoration: none"><b>@Model.PresentationName</b><i class="fa-regular fa-folder" style="padding-left: 10px"></i></a>
                                     }
                                     <input id="presentationEdit" type="file" onchange="presentationName(this)" name="uploadedPresentation" accept=".pptx" hidden />
                                 </div>
@@ -62,19 +63,12 @@
                         <div class="user-content">
                             <div class="box">
                                 <div class="form-group">
-                                    @if (Model.ImagePath == null)
-                                    {
-                                        <a class="btn" float="left" onclick="image.click()" style="width: 150px; height: 190px; background-color: #1b1919; color: #808080"><p style="text-align:center; padding-top: 50%" id="imageText">Добавить изображение</p></a>
-                                    } else
-                                    {
-                                        <div class="boxEdit" style="display: block" id="imageBlock">
-                                            <a float="left" onclick="image.click()">
-                                                <img style="float: left" src="@Url.Content(Model.ImagePath)">
-                                            </a>
-                                        </div>
-                                        <a class="btn" id="imageButton" float="left" onclick="image.click()" style="width: 150px; height: 190px; background-color: #1b1919; color: #808080; display: none"><p style="text-align:center; padding-top: 50%" id="imageText">@Model.ImageName</p></a>
-                                    }
-                                    <input id="image" type="file" onchange="imageEdit(this)" name="uploadedImage" accept=".jpg, .png, .jpeg" hidden />
+                                    <div class="boxEdit">
+                                        <a float="left" onclick="image.click()">
+                                            <img style="float: left" id="imageChange" src="@Url.Content(Model.ImagePath)">
+                                        </a>
+                                    </div>
+                                    <input id="image" type="file" onchange="imageEdit(this)" name="uploadedImage" accept=".jpg, .png, .jpeg" required hidden />
                                 </div>
                             </div>
                             <div class="form-group">
@@ -88,6 +82,9 @@
                                 {
                                     <a class="site-text text-light" id="siteButton" onclick="addSite()"><b>Добавить URL сайта</b></a>
                                     <input id="siteInput" class="name_of_project" type="hidden" style="margin-bottom: 0px; width: 20%; display: inline; margin-right: 20px" asp-for="siteUrl" autocomplete="off" placeholder="URL сайта" />
+                                } else
+                                {
+                                    <input id="siteInput" class="name_of_project" type="text" style="margin-bottom: 0px; width: 20%; display: inline; margin-right: 20px" asp-for="siteUrl" autocomplete="off" placeholder="URL сайта" />
                                 }
                                 <a class="btn-delete text-light" asp-action="projectDelete" asp-controller="home" asp-route-id="@Model.Id">Удалить</a>
                                 <input value="@Model.TimeOfCreating" type="text" asp-for="TimeOfCreating" hidden />
