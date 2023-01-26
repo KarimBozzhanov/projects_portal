@@ -17,6 +17,7 @@
                 <h4 align="center" class="text-light">Let's get started</h4>
             </div>
             <form asp-action="Register" asp-controller="Home" enctype="multipart/form-data">
+                <div class="validation text-light" style="margin-left: 35%" asp-validation-summary="ModelOnly"></div>
                <div class="form-group" align="center">
                    <div class="studentCheckBox" align="center">
                         <label class="t-radio__control">
@@ -34,10 +35,18 @@
                             </div>
                         </label>
                     </div>
-                   <input type="text" asp-for="Name" class="register-input" placeholder="Name" autocomplete="off"/>
-                   <input type="text" asp-for="Group" style="display: block" id="groupInput" class="register-input" placeholder="Group" autocomplete="off"/>
-                   <input type="password" asp-for="Password" class="register-input" placeholder="Password" autocomplete="off"/>
-                   <input type="password" asp-for="ConfirmPassword" class="register-input" placeholder="Repeat Password" autocomplete="off"/>
+                    <div class="form-group">
+                        <input type="text" asp-for="Name" class="register-input" placeholder="Name" required autocomplete="off" />
+                    </div>
+                    <div class="form-group">
+                        <input type="text" asp-for="Group" id="groupInput" class="register-input" placeholder="Group" autocomplete="off" />
+                    </div>
+                    <div class="form-group">
+                        <input type="password" asp-for="Password" class="register-input" placeholder="Password" required autocomplete="off" />
+                    </div>
+                    <div class="form-group">
+                        <input type="password" asp-for="ConfirmPassword" class="register-input" placeholder="Repeat Password" required autocomplete="off" />
+                    </div>
                </div>
                <div class="haveAcc" style="margin-left: 40%; float: left; font-size: 13px">
                    <p class="text-light" style="margin-bottom: 0px">You have account</p>

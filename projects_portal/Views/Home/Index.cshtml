@@ -1,4 +1,4 @@
-﻿@model IEnumerable<projects_portal.Models.Projects>
+﻿@model projects_portal.Models.AllModels;
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,14 +10,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-    @if (User.Identity.IsAuthenticated)
+    @if (User.Identity.IsAuthenticated && ViewData["role"].Equals("С"))
     {
         <a asp-action="Create" asp-controller="Home" asp-route-userName="@User.Identity.Name" class="fixed-button"><i class="fa-solid fa-plus"></i></a>
     }
 
     <div class="content">
         <div class="container">
-            @foreach (var item in Model)
+            @foreach (var item in Model.projects)
             {
                 <div class="card border border-0">
                     <div class="card-body">
@@ -37,7 +37,10 @@
                                     }
                                     @if (ViewData["role"].Equals("П") || ViewData["role"].Equals("А"))
                                     {
-                                        <a class="git text-light" href="@item.urlGit" style="text-decoration: none"><b>GitHub</b><img src="/Images/github.png" style="width: 35px; height:25px; padding-left: 10px; margin-bottom: 5px" /></a>
+                                        if (item.urlGit != null)
+                                        {
+                                            <a class="git text-light" href="@item.urlGit" style="text-decoration: none"><b>GitHub</b><img src="/Images/github.png" style="width: 35px; height:25px; padding-left: 10px; margin-bottom: 5px" /></a>
+                                        }                                        
                                     }
                                 }
                                 <a class="presentation text-light" id="presentationText" href="@item.PresentationPath" download="@item.PresentationName" style="text-decoration: none"><b>Презентация</b><i class="fa-regular fa-folder" style="padding-left: 10px"></i></a>
@@ -60,11 +63,38 @@
                             <p style="color: #696969; display: inline; margin-right: 10px"><b>@item.TimeOfCreating</b></p>
                             @if (User.Identity.IsAuthenticated)
                             {
+                                Console.WriteLine("Entered");
                                 @if (ViewData["role"].Equals("П") || ViewData["role"].Equals("А"))
                                 {
-                                <form asp-action="favoritePost" asp-controller="home" style="float: right" asp-route-userName="@User.Identity.Name" asp-route-postId="@item.Id">
-                                    <button class="favoriteButton" type="submit" style="color: #ffff"><i class="fa-regular fa-bookmark"></i></button>
-                                </form>
+                                    Console.WriteLine("Entered as a teacher");
+                                    @if (Model.favorite.Select(f => f.Id).Count() > 0)
+                                    {
+                                        Console.WriteLine("Favorite table != null");
+                                        @foreach (var fav in Model.favorite)
+                                        {
+                                            Console.WriteLine("Entered in foreach " + fav.postFavoriteId);
+                                            @if (item.Id == fav.postFavoriteId)
+                                            {
+                                                <form asp-action="deleteFavoritePost" method="post" asp-controller="home" style="float: right" asp-route-userNameFavorite="@User.Identity.Name" asp-route-postFavoriteId="@fav.postFavoriteId">
+                                                    <button class="favoriteButton" type="submit" style="color: #ffff"><i class="fa-solid fa-bookmark"></i></button>
+                                                </form>
+                                                break;
+                                            }
+                                            else if (item.Id != fav.postFavoriteId)
+                                            {
+                                                Console.WriteLine("Post is not favorite");
+                                                <form asp-action="favoritePost" asp-controller="home" style="float: right" asp-route-userName="@User.Identity.Name" asp-route-postId="@item.Id">
+                                                    <button class="favoriteButton" type="submit" style="color: #ffff"><i class="fa-regular fa-bookmark"></i></button>
+                                                </form>
+                                            }
+                                        }
+                                    } else
+                                    {
+                                        Console.WriteLine("Favorite table = null ");
+                                        <form asp-action="favoritePost" asp-controller="home" style="float: right" asp-route-userName="@User.Identity.Name" asp-route-postId="@item.Id">
+                                            <button class="favoriteButton" type="submit" style="color: #ffff"><i class="fa-regular fa-bookmark"></i></button>
+                                        </form>
+                                    }
                                 }   
                             }
                         </div>

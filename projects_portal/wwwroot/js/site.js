@@ -57,7 +57,7 @@ function studentButton() {
     var studentBtn = document.getElementById("student_btn");
     var teacherBtn = document.getElementById("teacher_btn");
     var groupInput = document.getElementById("groupInput")
-    groupInput.style.display = "block"
+    groupInput.type = "text";
     studentBtn.style.zIndex = "99";
     teacherBtn.style.zIndex = "98";
 }
@@ -66,7 +66,7 @@ function teacherButton() {
     var teacherBtn = document.getElementById("teacher_btn");
     var studentBtn = document.getElementById("student_btn");
     var groupInput = document.getElementById("groupInput")
-    groupInput.style.display = "none";
+    groupInput.type = "hidden";
     teacherBtn.style.zIndex = "99";
     studentBtn.style.zIndex = "98";
 }
