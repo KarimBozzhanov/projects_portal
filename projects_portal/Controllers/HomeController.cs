@@ -41,8 +41,16 @@ namespace projects_portal.Controllers
             {
                 ViewData["role"] = user.Role;
             }
-            return View(await db.projects.OrderByDescending(a => a.TimeOfCreating).ToListAsync());
+            var allModels = new AllModels();
+            allModels.projects = db.projects.OrderByDescending(a => a.TimeOfCreating).ToList();
+            allModels.favorite = db.favorite.Where(f => f.userNameFavorite == User.Identity.Name).ToList();
+            allModels.users = db.User.ToList();
+            return View(allModels);
         }
+
+
+
+       
 
         [HttpGet]
         public async Task<IActionResult> Create(string userName)
@@ -136,13 +144,24 @@ namespace projects_portal.Controllers
                 User user = await db.User.FirstOrDefaultAsync(u => u.Name == registerModel.Name);
                 if (user == null)
                 {
-                    db.User.Add(new User { Name = registerModel.Name, Group = registerModel.Group, Password = registerModel.Password, Role = role });
+                    if (role.Equals("П"))
+                    {
+                        db.User.Add(new User { Name = registerModel.Name, Group = null, Password = registerModel.Password, Role = role });
+                    } else
+                    {
+                        db.User.Add(new User { Name = registerModel.Name, Group = registerModel.Group, Password = registerModel.Password, Role = role });   
+                    }
                     await db.SaveChangesAsync();
                     await Authenticate(registerModel.Name);
                     return RedirectToAction("Index");
                 }
                 else
-                    ModelState.AddModelError("", "Некорректные логин или пароль");
+                {
+                    ModelState.AddModelError("", "Пользователь с данным именем уже зарегистрирован");
+                }
+            } else
+            {
+                ModelState.AddModelError("", "Некорректные логин или пароль");
             }
             return View(registerModel);
         }
@@ -265,35 +284,20 @@ namespace projects_portal.Controllers
         [HttpPost]
         public async Task<IActionResult> favoritePost (string userName, int postId)
         {
-            User user = await db.User.FirstOrDefaultAsync(u => u.Name == userName);
-            if (user != null)
-            {
-                db.favorite.Add(new favorite { userId = user.Id, userNameFavorite = userName, postFavoriteId = postId });
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
-            } 
-            return NotFound();
+            db.favorite.Add(new favorite { userNameFavorite = userName, postFavoriteId = postId });
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
         public async Task<IActionResult> deleteFavoritePost(string userNameFavorite, int? postFavoriteId)
         {
-            if (postFavoriteId != null)
+            favorite favoritePost = await db.favorite.FirstOrDefaultAsync(f => f.userNameFavorite == userNameFavorite && f.postFavoriteId == postFavoriteId);
+            if (favoritePost != null)
             {
-                Projects project = await db.projects.FirstOrDefaultAsync(a => a.Id == postFavoriteId);
-                if (project != null)
-                {
-                    User user = await db.User.FirstOrDefaultAsync(u => u.Name == userNameFavorite);
-                    if (user != null)
-                    {
-                        favorite favoritePost = await db.favorite.FirstOrDefaultAsync(f => f.userNameFavorite == user.Name && f.postFavoriteId == project.Id);
-                        if (favoritePost != null)
-                        {
-                            db.Entry(favoritePost).State = EntityState.Deleted;
-                            await db.SaveChangesAsync();
-                        }
-                    }
-                }
+                db.Entry(favoritePost).State = EntityState.Deleted;
+                await db.SaveChangesAsync();
+                return RedirectToAction("Index");
             }
             return NotFound();
         }
