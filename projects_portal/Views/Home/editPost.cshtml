@@ -61,16 +61,32 @@
                             <hr style="background-color: #696969; margin-top: 0px; margin-bottom: 30px" />
                         </div>
                         <div class="user-content">
-                            <div class="box">
-                                <div class="form-group">
-                                    <div class="boxEdit">
-                                        <a float="left" onclick="image.click()">
-                                            <img style="float: left" id="imageChange" src="@Url.Content(Model.ImagePath)">
-                                        </a>
+                            @if (Model.ImagePath != null)
+                            {
+                                <div class="box">
+                                    <div class="form-group">
+                                        <div class="boxEdit">
+                                            <a float="left" onclick="image.click()">
+                                                <img style="float: left" id="imageChange" src="@Url.Content(Model.ImagePath)">
+                                            </a>
+                                        </div>
+                                        <input id="image" type="file" onchange="imageEdit(this)" name="uploadedImage" accept=".jpg, .png, .jpeg" hidden />
                                     </div>
-                                    <input id="image" type="file" onchange="imageEdit(this)" name="uploadedImage" accept=".jpg, .png, .jpeg" required hidden />
                                 </div>
-                            </div>
+                            } else
+                            {
+                                <div class="box">
+                                    <div class="form-group">
+                                        <a class="image_box btn text-light" float="left" id="imageBtn" onclick="image.click()" style="display: block"><p style="text-align:center; padding-top: 50%" id="imageText">Добавить изображение</p></a>
+                                        <div class="boxEdit" style="display: none" id="imageBlock">
+                                            <a float="left" onclick="image.click()">
+                                                <img style="float: left" id="imageSrc" src="#">
+                                            </a>
+                                        </div>
+                                        <input id="image" type="file" onchange="imageName(this)" name="uploadedImage" accept=".jpg, .png, .jpeg" hidden />
+                                    </div>
+                                </div>
+                            }
                             <div class="form-group">
                                 <input class="name_of_project" style="margin-bottom: 0px" asp-for="NameOfProject" autocomplete="off" required placeholder="Название проекта" />
                             </div>

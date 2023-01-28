@@ -1,5 +1,6 @@
 ﻿body {
-    background-color: #1b1919
+    background-color: #1b1919;
+    margin: 0px 0px;
 }
 .headerColor {
     background: rgb(228,170,219);
@@ -360,4 +361,56 @@ input[type=radio]:checked + .radio_button{
     background-image: linear-gradient(90deg, rgba(208,175,210,1) 0%, rgba(82,14,145,1) 87%);
     -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;
+}
+
+.validation {
+    list-style-position: inside
+}
+
+.image_box {
+    width: 150px;
+    height: 190px;
+    background-color: #1b1919;
+    color: #808080;
+    border-radius: 20px;
+}
+
+.footer {
+    background-color: #2D2D2D;
+    display: grid;
+    grid-template-areas: "a";
+    padding-top: 10px;
+    padding-bottom: 5px;
+}
+
+
+.footer-container {
+    display: flex;
+    max-width: 100%;
+    height: auto;
+    grid-area: a;
+    justify-self: center;
+}
+
+.footer-item {
+    display: inline-block;
+    margin-left: 100px;
+}
+
+.footer-item p {
+    margin-bottom: 0px;
+}
+
+
+.main_text {
+    font-size: large;
+    color: rgb(208,175,210);
+    background-image: linear-gradient(90deg, rgba(208,175,210,1) 0%, rgba(82,14,145,1) 87%);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+}
+
+.footer_text {
+    color: #DCDCDC;
+    font-size: medium;
 }

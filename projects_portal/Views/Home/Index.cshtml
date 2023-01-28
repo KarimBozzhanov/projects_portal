@@ -43,7 +43,10 @@
                                         }                                        
                                     }
                                 }
-                                <a class="presentation text-light" id="presentationText" href="@item.PresentationPath" download="@item.PresentationName" style="text-decoration: none"><b>Презентация</b><i class="fa-regular fa-folder" style="padding-left: 10px"></i></a>
+                                @if (item.PresentationPath != null)
+                                {
+                                    <a class="presentation text-light" id="presentationText" href="@item.PresentationPath" download="@item.PresentationName" style="text-decoration: none"><b>Презентация</b><i class="fa-regular fa-folder" style="padding-left: 10px"></i></a>
+                                }
                                 @if (item.apkFilePath != null)
                                 {
                                     <a class="download" href="@item.apkFilePath" download="@item.apkFileName" style="text-decoration: none"><b>Скачать</b><i class="fa-regular fa-folder" style="padding-left: 15px"></i></a>
@@ -52,9 +55,17 @@
                             <hr style="background-color: #696969; margin-top: 0px; margin-bottom: 30px" />
                         </div>
                         <div class="user-content">
-                            <div class="box">
-                                <img style="float: left" src="@Url.Content(item.ImagePath)">
-                            </div>
+                            @if (item.ImagePath != null)
+                            {
+                                <div class="box">
+                                    <img style="float: left" src="@Url.Content(item.ImagePath)">
+                                </div>
+                            } else
+                            {
+                                <div class="box">
+                                    <p class="image_box text-light" float="left" align="center" style="padding-top: 50%">MonoLog</p>
+                                </div>
+                            }
                             <p class="title text-light" style="font-size: 25px; margin-bottom: 0px;">@item.NameOfProject</p>
                             <p class="description line-limit-length text-light" style="display: inline">@item.Description</p>
                         </div>
@@ -104,8 +115,34 @@
         </div>
     </div>
 
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-item" style="text-align:left">
+                <div class="developer">
+                    <p class="main_text"><b>Разработчик</b></p>
+                    <p class="footer_text"><b>Бозжанов Карим</b></p>
+                    <p class="footer_text"><b>Группа - РПОД4-21Р</b></p>
+                </div>
+            </div>
+            <div class="footer-item" style="text-align: left">
+                <div class="designer">
+                    <p class="main_text"><b>Дизайнер</b></p>
+                    <p class="footer_text"><b>Бауыржан Алишер</b></p>
+                    <p class="footer_text"><b>Группа - РПОД4-21Р</b></p>
+                </div>
+            </div>
+            <div class="footer-item" style="text-align: left">
+                <div class="contacts">
+                    <p class="main_text"><b>Связаться с нами</b></p>
+                    <p class="footer_text"><i class="fa-brands fa-instagram" style="padding-right: 5px"></i> <b>RPOD4_21R</b></p>
+                    <p class="footer_text"><i class=" fa-solid fa-phone" style="padding-right: 5px"></i><b>+7 (707) 233 55 99</b></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 </body>
 </html>

@@ -42,13 +42,13 @@
                             <div class="validation text-light" style="margin-left: 35%" asp-validation-summary="ModelOnly"></div>
                             <div class="box">
                                 <div class="form-group">
-                                    <a class="btn" float="left" id="imageBtn" onclick="image.click()" style="width: 150px; height: 190px; background-color: #1b1919; color: #808080; display: block"><p style="text-align:center; padding-top: 50%" id="imageText">Добавить изображение</p></a>
+                                    <a class="image_box btn text-light" float="left" id="imageBtn" onclick="image.click()" style="display: block"><p style="text-align:center; padding-top: 50%" id="imageText">Добавить изображение</p></a>
                                     <div class="boxEdit" style="display: none" id="imageBlock">
                                         <a float="left" onclick="image.click()">
                                             <img style="float: left" id="imageSrc" src="#">
                                         </a>
                                     </div>
-                                    <input id="image" type="file" onchange="imageName(this)" name="uploadedImage" accept=".jpg, .png, .jpeg" required hidden />
+                                    <input id="image" type="file" onchange="imageName(this)" name="uploadedImage" accept=".jpg, .png, .jpeg" hidden />
                                 </div>
                             </div>
                             <div class="form-group">
@@ -62,6 +62,7 @@
                                 <p style="float: right; padding-left: 20px; padding-top: 8px; padding-right: 10px; color: #696969">@DateTime.Now</p>
                             </div>
                         </div>
+                        <div class="validation text-light" asp-validation-summary="ModelOnly"></div>
                         <div class="form-group">
                             <button type="submit" class="btn mt-2 rounded-3" style="background-color: #1b1919; color: #808080" align="right">Создать пост</button>
                         </div>
