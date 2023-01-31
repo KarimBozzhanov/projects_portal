@@ -1,0 +1,64 @@
+﻿@model projects_portal.Models.User
+@{
+    Layout = "_Layout";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - MonoLOG</title>
+    <link rel="stylesheet" href="~/css/bootstrap.min.css    />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="content">
+        <div class="container">
+            <div class="registration_header pt-5">
+                <h4 align="center" class="register_text mt-3" style="padding-bottom: 15px"><b>Изменение профиля</b></h4>
+            </div>
+            <form asp-action="changeUser" asp-controller="Home" enctype="multipart/form-data">
+                <div class="form-group" align="center">
+                    <div class="validation text-light" style="text-align:center" asp-validation-summary="ModelOnly"></div>
+
+                    <div class="form-group">
+                        <input type="text" asp-for="Name" class="register-input" placeholder="ФИО" autocomplete="off" />
+                    </div>
+                    @if (Model.Role.Equals("student"))
+                    {
+                        <div class="form-group">
+                            <input type="text" asp-for="Group" class="register-input" placeholder="Группа" autocomplete="off" />
+                        </div>
+                    }
+                    @if (Model.Role.Equals("student"))
+                    {
+                        <div class="form-group">
+                            <input type="text" asp-for="Curator" class="register-input" placeholder="Куратор" autocomplete="off" />
+                        </div>
+                    }
+                    <div class="form-group">
+                        <input type="text" asp-for="Email" class="register-input" placeholder="Email" autocomplete="off" />
+                    </div>
+                    <div class="form-group">
+                        <input type="text" asp-for="Instagram" class="register-input" placeholder="Instagram" autocomplete="off" />
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" asp-for="Password" class="register-input" placeholder="Password" autocomplete="off" />
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" asp-for="Role" class="register-input" placeholder="Role" autocomplete="off" />
+                    </div>
+                    <div class="form-group" align="center" style="display: inline">
+                        <button type="submit" class="signUp_button btn rounded-3 mt-1" style="color: #ffff; margin-left: 15px" align="right">Изменить</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+</html>
