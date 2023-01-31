@@ -21,6 +21,10 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using PagedList.Mvc;
 using PagedList;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System.Xml.Linq;
+using System.Text.RegularExpressions;
+using Newtonsoft.Json;
 
 namespace projects_portal.Controllers
 {
@@ -37,7 +41,7 @@ namespace projects_portal.Controllers
             app = appEnvironment;
         }
 
-        public async Task<IActionResult> Index(int page = 0)
+        public async Task<IActionResult> Index(string searchText)
         {
             User user = await db.User.FirstOrDefaultAsync(u => u.Name == User.Identity.Name);
             if (user != null)
@@ -45,15 +49,17 @@ namespace projects_portal.Controllers
                 ViewData["role"] = user.Role;
             }
             var allModels = new AllModels();
-            allModels.projects = db.projects.OrderByDescending(a => a.TimeOfCreating).ToList();
-            allModels.favorite = db.favorite.Where(f => f.userNameFavorite == User.Identity.Name).ToList();
+            if (!String.IsNullOrEmpty(searchText))
+            {
+                allModels.projects = db.projects.OrderByDescending(p => p.TimeOfCreating).Where(p => p.Name.Contains(searchText) || p.NameOfProject.Contains(searchText)).ToList();
+            } else
+            {
+                allModels.projects = db.projects.OrderByDescending(a => a.TimeOfCreating).ToList();
+            }
+            allModels.favorite = db.favorite.ToList();
             allModels.users = db.User.ToList();
             return View(allModels);
         }
-
-
-
-       
 
         [HttpGet]
         public async Task<IActionResult> Create(string userName)
@@ -69,6 +75,8 @@ namespace projects_portal.Controllers
             }
            return NotFound();
         }
+
+
         [HttpPost]
         public async Task<IActionResult> Create(CreateModel createModel, IFormFile uploadedPresentation, IFormFile uploadedApk, IFormFile uploadedImage)
         {
@@ -94,7 +102,15 @@ namespace projects_portal.Controllers
                             await uploadedImage.CopyToAsync(fileStream);
                         }
                         User user = await db.User.FirstOrDefaultAsync(u => u.Name == User.Identity.Name);
-                        db.projects.Add(new Projects { NameOfProject = createModel.NameOfProject, Name = user.Name, TimeOfCreating = DateTime.Now, Group = user.Group, Description = createModel.Description, PresentationName = uploadedPresentation.FileName, PresentationPath = presentationPath, apkFileName = uploadedApk.FileName, apkFilePath = apkPath, urlGit = createModel.urlGit, siteUrl = createModel.siteUrl, ImageName = uploadedImage.FileName, ImagePath = imagePath });
+                        db.projects.Add(new Projects { 
+                            userId = user.Id, NameOfProject = createModel.NameOfProject, Name = user.Name, 
+                            TimeOfCreating = DateTime.Now, Group = user.Group, 
+                            Description = createModel.Description, 
+                            PresentationName = uploadedPresentation.FileName, 
+                            PresentationPath = presentationPath, apkFileName = uploadedApk.FileName, 
+                            apkFilePath = apkPath, urlGit = createModel.urlGit, 
+                            siteUrl = createModel.siteUrl, ImageName = uploadedImage.FileName, 
+                            ImagePath = imagePath });
                         await db.SaveChangesAsync();
                         return RedirectToAction("Index");
                     } else
@@ -110,7 +126,15 @@ namespace projects_portal.Controllers
                             await uploadedImage.CopyToAsync(fileStream);
                         }
                         User user = await db.User.FirstOrDefaultAsync(u => u.Name == User.Identity.Name);
-                        db.projects.Add(new Projects { NameOfProject = createModel.NameOfProject, Name = user.Name, TimeOfCreating = DateTime.Now, Group = user.Group, Description = createModel.Description, PresentationName = null, PresentationPath = null, apkFileName = uploadedApk.FileName, apkFilePath = apkPath, urlGit = createModel.urlGit, siteUrl = createModel.siteUrl, ImageName = uploadedImage.FileName, ImagePath = imagePath });
+                        db.projects.Add(new Projects { 
+                            userId = user.Id, NameOfProject = createModel.NameOfProject, Name = user.Name, 
+                            TimeOfCreating = DateTime.Now, Group = user.Group, 
+                            Description = createModel.Description, PresentationName = null, 
+                            PresentationPath = null, apkFileName = uploadedApk.FileName, 
+                            apkFilePath = apkPath, urlGit = createModel.urlGit, 
+                            siteUrl = createModel.siteUrl, ImageName = uploadedImage.FileName, 
+                            ImagePath = imagePath
+                        });
                         await db.SaveChangesAsync();
                         return RedirectToAction("Index");
                     }
@@ -129,7 +153,15 @@ namespace projects_portal.Controllers
                             await uploadedApk.CopyToAsync(fileStream);
                         }
                         User user = await db.User.FirstOrDefaultAsync(u => u.Name == User.Identity.Name);
-                        db.projects.Add(new Projects { NameOfProject = createModel.NameOfProject, Name = user.Name, TimeOfCreating = DateTime.Now, Group = user.Group, Description = createModel.Description, PresentationName = uploadedPresentation.FileName, PresentationPath = presentationPath, apkFileName = uploadedApk.FileName, apkFilePath = apkPath, urlGit = createModel.urlGit, siteUrl = createModel.siteUrl, ImageName = null, ImagePath = null });
+                        db.projects.Add(new Projects { 
+                            userId = user.Id, NameOfProject = createModel.NameOfProject, Name = user.Name, 
+                            TimeOfCreating = DateTime.Now, Group = user.Group, 
+                            Description = createModel.Description, 
+                            PresentationName = uploadedPresentation.FileName, 
+                            PresentationPath = presentationPath, apkFileName = uploadedApk.FileName, 
+                            apkFilePath = apkPath, urlGit = createModel.urlGit, 
+                            siteUrl = createModel.siteUrl, ImageName = null, ImagePath = null
+                        });
                         await db.SaveChangesAsync();
                         return RedirectToAction("Index");
                     } else
@@ -140,7 +172,14 @@ namespace projects_portal.Controllers
                             await uploadedApk.CopyToAsync(fileStream);
                         }
                         User user = await db.User.FirstOrDefaultAsync(u => u.Name == User.Identity.Name);
-                        db.projects.Add(new Projects { NameOfProject = createModel.NameOfProject, Name = user.Name, TimeOfCreating = DateTime.Now, Group = user.Group, Description = createModel.Description, PresentationName = null, PresentationPath = null, apkFileName = uploadedApk.FileName, apkFilePath = apkPath, urlGit = createModel.urlGit, siteUrl = createModel.siteUrl, ImageName = null, ImagePath = null });
+                        db.projects.Add(new Projects {
+                            userId = user.Id, NameOfProject = createModel.NameOfProject, Name = user.Name, 
+                            TimeOfCreating = DateTime.Now, Group = user.Group, 
+                            Description = createModel.Description, PresentationName = null, 
+                            PresentationPath = null, apkFileName = uploadedApk.FileName, 
+                            apkFilePath = apkPath, urlGit = createModel.urlGit, 
+                            siteUrl = createModel.siteUrl, ImageName = null, ImagePath = null
+                        });
                         await db.SaveChangesAsync();
                         return RedirectToAction("Index");
                     }
@@ -162,7 +201,17 @@ namespace projects_portal.Controllers
                             await uploadedImage.CopyToAsync(fileStream);
                         }
                         User user = await db.User.FirstOrDefaultAsync(u => u.Name == User.Identity.Name);
-                        db.projects.Add(new Projects { NameOfProject = createModel.NameOfProject, Name = user.Name, TimeOfCreating = DateTime.UtcNow, Group = user.Group, Description = createModel.Description, PresentationName = uploadedPresentation.FileName, PresentationPath = presentationPath, apkFileName = null, apkFilePath = null, urlGit = createModel.urlGit, siteUrl = createModel.siteUrl, ImageName = uploadedImage.FileName, ImagePath = imagePath });
+                        db.projects.Add(new Projects 
+                        { 
+                            userId = user.Id, NameOfProject = createModel.NameOfProject, Name = user.Name, 
+                            TimeOfCreating = DateTime.UtcNow, Group = user.Group, 
+                            Description = createModel.Description, 
+                            PresentationName = uploadedPresentation.FileName, 
+                            PresentationPath = presentationPath, apkFileName = null, 
+                            apkFilePath = null, urlGit = createModel.urlGit, 
+                            siteUrl = createModel.siteUrl, ImageName = uploadedImage.FileName, 
+                            ImagePath = imagePath
+                        });
                         await db.SaveChangesAsync();
                         return RedirectToAction("Index");
                     } else
@@ -173,7 +222,15 @@ namespace projects_portal.Controllers
                             await uploadedImage.CopyToAsync(fileStream);
                         }
                         User user = await db.User.FirstOrDefaultAsync(u => u.Name == User.Identity.Name);
-                        db.projects.Add(new Projects { NameOfProject = createModel.NameOfProject, Name = user.Name, TimeOfCreating = DateTime.Now, Group = user.Group, Description = createModel.Description, PresentationName = null, PresentationPath = null, apkFileName = null, apkFilePath = null, urlGit = createModel.urlGit, siteUrl = createModel.siteUrl, ImageName = uploadedImage.FileName, ImagePath = imagePath });
+                        db.projects.Add(new Projects { 
+                            userId = user.Id, NameOfProject = createModel.NameOfProject, 
+                            Name = user.Name, TimeOfCreating = DateTime.Now, 
+                            Group = user.Group, Description = createModel.Description, 
+                            PresentationName = null, PresentationPath = null, apkFileName = null, 
+                            apkFilePath = null, urlGit = createModel.urlGit, 
+                            siteUrl = createModel.siteUrl, ImageName = uploadedImage.FileName, 
+                            ImagePath = imagePath
+                        });
                         await db.SaveChangesAsync();
                         return RedirectToAction("Index");
                     }
@@ -187,13 +244,28 @@ namespace projects_portal.Controllers
                             await uploadedPresentation.CopyToAsync(fileStream);
                         }
                         User user = await db.User.FirstOrDefaultAsync(u => u.Name == User.Identity.Name);
-                        db.projects.Add(new Projects { NameOfProject = createModel.NameOfProject, Name = user.Name, TimeOfCreating = DateTime.UtcNow, Group = user.Group, Description = createModel.Description, PresentationName = uploadedPresentation.FileName, PresentationPath = presentationPath, apkFileName = null, apkFilePath = null, urlGit = createModel.urlGit, siteUrl = createModel.siteUrl, ImageName = null, ImagePath = null });
+                        db.projects.Add(new Projects { 
+                            userId = user.Id, NameOfProject = createModel.NameOfProject, 
+                            Name = user.Name, TimeOfCreating = DateTime.UtcNow, 
+                            Group = user.Group, Description = createModel.Description, 
+                            PresentationName = uploadedPresentation.FileName, 
+                            PresentationPath = presentationPath, apkFileName = null, 
+                            apkFilePath = null, urlGit = createModel.urlGit, 
+                            siteUrl = createModel.siteUrl, ImageName = null, ImagePath = null
+                        });
                         await db.SaveChangesAsync();
                         return RedirectToAction("Index");
                     } else
                     {
                         User user = await db.User.FirstOrDefaultAsync(u => u.Name == User.Identity.Name);
-                        db.projects.Add(new Projects { NameOfProject = createModel.NameOfProject, Name = user.Name, TimeOfCreating = DateTime.UtcNow, Group = user.Group, Description = createModel.Description, PresentationName = null, PresentationPath = null, apkFileName = null, apkFilePath = null, urlGit = createModel.urlGit, siteUrl = createModel.siteUrl, ImageName = null, ImagePath = null });
+                        db.projects.Add(new Projects { 
+                            userId = user.Id, NameOfProject = createModel.NameOfProject, 
+                            Name = user.Name, TimeOfCreating = DateTime.UtcNow, 
+                            Group = user.Group, Description = createModel.Description, 
+                            PresentationName = null, PresentationPath = null, apkFileName = null, 
+                            apkFilePath = null, urlGit = createModel.urlGit, 
+                            siteUrl = createModel.siteUrl, ImageName = null, ImagePath = null
+                        });
                         await db.SaveChangesAsync();
                         return RedirectToAction("Index");
                     }
@@ -238,17 +310,29 @@ namespace projects_portal.Controllers
                 {
                     if (registerModel.Password == registerModel.ConfirmPassword)
                     {
-                        if (role.Equals("П"))
+                        if (role.Equals("teacher"))
                         {
-                            db.User.Add(new User { Name = registerModel.Name, Group = null, Password = registerModel.Password, Role = role });
+                            if (registerModel.Code.Equals("Te@chers1NTC@2015+-"))
+                            {
+                                db.User.Add(new User { Name = registerModel.Name, Group = null, Curator = null, Password = registerModel.Password, Role = role });
+                                await db.SaveChangesAsync();
+                                await Authenticate(registerModel.Name);
+                                return RedirectToAction("Index");
+                            } else
+                            {
+                                ModelState.AddModelError("", "Проверочный код неправильный");
+                            }
                         }
                         else
                         {
-                            db.User.Add(new User { Name = registerModel.Name, Group = registerModel.Group, Password = registerModel.Password, Role = role });
+                            if (registerModel.Code == null)
+                            {
+                                db.User.Add(new User { Name = registerModel.Name, Group = registerModel.Group, Curator = registerModel.Curator, Password = registerModel.Password, Role = role });
+                                await db.SaveChangesAsync();
+                                await Authenticate(registerModel.Name);
+                                return RedirectToAction("Index");
+                            }
                         }
-                        await db.SaveChangesAsync();
-                        await Authenticate(registerModel.Name);
-                        return RedirectToAction("Index");
                     } else
                     {
                         ModelState.AddModelError("", "Пароли не совпадают");
@@ -380,10 +464,34 @@ namespace projects_portal.Controllers
             return NotFound();
         }
 
-        [HttpPost]
-        public async Task<IActionResult> favoritePost (string userName, int postId)
+        [HttpGet]
+        public async Task<IActionResult> favoritePage(string userName)
         {
-            db.favorite.Add(new favorite { userNameFavorite = userName, postFavoriteId = postId });
+            if (userName != null)
+            {
+                User user = await db.User.FirstOrDefaultAsync(u => u.Name == userName);
+                var allModels = new AllModels();
+                allModels.projects = db.projects.OrderByDescending(a => a.TimeOfCreating).ToList();
+                allModels.favorite = db.favorite.ToList();
+                allModels.users = db.User.ToList();
+                return View(allModels);
+            }   
+            return NotFound();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> favoritePost (int postId)
+        {
+            Projects project = await db.projects.FirstOrDefaultAsync(p => p.Id == postId);
+            db.favorite.Add(new favorite { 
+                postId = project.Id, NameOfProject = project.NameOfProject, Name = project.Name, 
+                TimeOfCreating = project.TimeOfCreating, Group = project.Group, 
+                Description = project.Description, PresentationName = project.PresentationName, 
+                PresentationPath = project.PresentationPath, apkFileName = project.apkFileName, 
+                apkFilePath = project.apkFilePath, urlGit =  project.urlGit, siteUrl =
+                project.siteUrl, ImageName = project.ImageName, ImagePath = project.ImagePath, 
+                userNameFavorite = User.Identity.Name
+            });
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
@@ -391,7 +499,7 @@ namespace projects_portal.Controllers
         [HttpPost]
         public async Task<IActionResult> deleteFavoritePost(string userNameFavorite, int? postFavoriteId)
         {
-            favorite favoritePost = await db.favorite.FirstOrDefaultAsync(f => f.userNameFavorite == userNameFavorite && f.postFavoriteId == postFavoriteId);
+            favorite favoritePost = await db.favorite.FirstOrDefaultAsync(f => f.userNameFavorite == userNameFavorite && f.postId == postFavoriteId);
             if (favoritePost != null)
             {
                 db.Entry(favoritePost).State = EntityState.Deleted;
@@ -401,7 +509,55 @@ namespace projects_portal.Controllers
             return NotFound();
         }
 
+        [HttpGet]
+        public async Task<IActionResult> changeUser(int? id) 
+        {
+            if (id != null)
+            {
+                User user = await db.User.FirstOrDefaultAsync(u => u.Id == id);
+                if (user != null)
+                {
+                    ViewData["role"] = user.Role;
+                    return View(user);
+                } 
+            }
+            return NotFound();
+;        }
 
+        [HttpPost]
+        public async Task<IActionResult> changeUser(User user)
+        {
+            db.User.Update(user);
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }   
+
+        public JsonResult userInfo(int? id)
+        {
+            Projects project = db.projects.FirstOrDefault(p => p.Id == id);
+            if (project != null)
+            {
+                User user = db.User.FirstOrDefault(u => u.Id == project.userId);
+                Console.WriteLine(user.Group);
+                var userJson = JsonConvert.SerializeObject(user);
+                return Json(userJson);
+            }
+            return Json(NotFound());
+        }
+
+        public JsonResult getMyInfo(int? id)
+        {
+            if (id != null)
+            {
+                User user = db.User.FirstOrDefault(u => u.Id == id);
+                if (user != null)
+                {
+                    var userJson = JsonConvert.SerializeObject(user);
+                    return Json(userJson);
+                }
+            }
+            return Json(NotFound());
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

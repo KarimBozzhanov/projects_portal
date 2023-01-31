@@ -1,16 +1,19 @@
 ﻿@model projects_portal.Models.AllModels;
+@{
+    Layout = "_Layout1";
+}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - HZ_Project</title>
     <link rel="stylesheet" href="~/css/bootstrap.min.css />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-    @if (User.Identity.IsAuthenticated && ViewData["role"].Equals("С"))
+    @if (User.Identity.IsAuthenticated)
     {
         <a asp-action="Create" asp-controller="Home" asp-route-userName="@User.Identity.Name" class="fixed-button"><i class="fa-solid fa-plus"></i></a>
     }
@@ -25,17 +28,23 @@
                             <div class="row">
                                 <div class="col">
                                     <div class="username text-bg-dark" style="margin-left: 10px; margin-top: 4px">
-                                        <h4 class="text-light" style="margin-bottom: 0px">@item.Name</h4>
+                                        <h4 class="text-light" style="margin-bottom: 0px"><button class="userModal text-light" onclick="modalWindow(@item.Id)" style="padding-left: 0px;" data-bs-toggle="modal" data-bs-target="#userPostModal"><b>@item.Name</b></button></h4>
                                         <p style="color: #696969"><b>@item.Group</b></p>
                                     </div>
                                 </div>
                                 @if (User.Identity.IsAuthenticated)
                                 {
-                                    @if (item.Name == User.Identity.Name || ViewData["role"].Equals("А"))
+                                    @if (item.Name == User.Identity.Name || ViewData["role"].Equals("admin"))
                                     {
-                                        <a class="edit" asp-action="editPost" asp-controller="home" asp-route-id="@item.Id" asp-route-userName="@item.Name" style="text-decoration: none"><b>Редактировать</b><i class="fa-solid fa-sliders" style="padding-left: 15px"></i></a>
+                                        @if (item.apkFilePath == null && item.PresentationPath == null)
+                                        {
+                                            <a class="edit" asp-action="editPost" asp-controller="home" asp-route-id="@item.Id" asp-route-userName="@item.Name" style="text-decoration: none; margin-right: 15px"><b>Редактировать</b><i class="fa-solid fa-sliders" style="padding-left: 15px"></i></a>
+                                        } else
+                                        {
+                                            <a class="edit" asp-action="editPost" asp-controller="home" asp-route-id="@item.Id" asp-route-userName="@item.Name" style="text-decoration: none"><b>Редактировать</b><i class="fa-solid fa-sliders" style="padding-left: 15px"></i></a>
+                                        }
                                     }
-                                    @if (ViewData["role"].Equals("П") || ViewData["role"].Equals("А"))
+                                    @if (ViewData["role"].Equals("teacher") || ViewData["role"].Equals("admin") || item.Name == User.Identity.Name)
                                     {
                                         if (item.urlGit != null)
                                         {
@@ -43,13 +52,46 @@
                                         }                                        
                                     }
                                 }
+                                <div class="modal fade" id="userPostModal" tabindex="-1" aria-labelledby="userPostModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modalContent modal-content">
+                                            <div class="modal_header" align="right">
+                                                <button type="button" class="modalClose" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+                                            </div>
+                                            <div class="modal_body">
+                                                <div class="modal-item">
+                                                    <h4 class="text-light" id="userNameText" style="margin-bottom: 0px; padding-bottom: 5px"><b></b></h4>
+                                                </div>
+                                                <div class="modal-item">
+                                                    <h5 class="itemText" id="groupText"><b></b></h5>
+                                                </div>
+                                                <div class="modal-item">
+                                                    <h4 class="text-light" style="padding-top: 5px" id="curatorItemText"><b>Куратор</b></h4>
+                                                    <h5 class="itemText" id="curatorName"><b></b></h5>
+                                                </div>
+                                                <div class="modal-item" style="margin-top: 20px">
+                                                    <h4 class="colorItemText" id="instText"><b></b></h4>
+                                                </div>
+                                                <div class="modal-item">
+                                                    <h4 class="colorItemText" id="emailText"><b></b></h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 @if (item.PresentationPath != null)
                                 {
-                                    <a class="presentation text-light" id="presentationText" href="@item.PresentationPath" download="@item.PresentationName" style="text-decoration: none"><b>Презентация</b><i class="fa-regular fa-folder" style="padding-left: 10px"></i></a>
+                                    @if (item.apkFilePath == null)
+                                    {
+                                        <a class="presentation text-light" id="presentationText" href="@item.PresentationPath" download="@item.PresentationName" style="text-decoration: none; margin-right: 15px"><b>Презентация</b><i class="fa-regular fa-folder" style="padding-left: 10px"></i></a>
+                                    } else
+                                    {
+                                        <a class="presentation text-light" id="presentationText" href="@item.PresentationPath" download="@item.PresentationName" style="text-decoration: none"><b>Презентация</b><i class="fa-regular fa-folder" style="padding-left: 10px"></i></a>
+                                    }
                                 }
                                 @if (item.apkFilePath != null)
-                                {
-                                    <a class="download" href="@item.apkFilePath" download="@item.apkFileName" style="text-decoration: none"><b>Скачать</b><i class="fa-regular fa-folder" style="padding-left: 15px"></i></a>
+                                { 
+                                    <a class="download" href="@item.apkFilePath" download="@item.apkFileName" style="text-decoration: none; margin-right: 15px"><b>Скачать</b><i class="fa-regular fa-folder" style="padding-left: 15px"></i></a>
                                 }
                             </div>
                             <hr style="background-color: #696969; margin-top: 0px; margin-bottom: 30px" />
@@ -72,42 +114,6 @@
                         <div class="user-footer">
                             <a class="site-url text-light" href="@item.siteUrl">@item.siteUrl</a>
                             <p style="color: #696969; display: inline; margin-right: 10px"><b>@item.TimeOfCreating</b></p>
-                            @if (User.Identity.IsAuthenticated)
-                            {
-                                Console.WriteLine("Entered");
-                                @if (ViewData["role"].Equals("П") || ViewData["role"].Equals("А"))
-                                {
-                                    Console.WriteLine("Entered as a teacher");
-                                    @if (Model.favorite.Select(f => f.Id).Count() > 0)
-                                    {
-                                        Console.WriteLine("Favorite table != null");
-                                        @foreach (var fav in Model.favorite)
-                                        {
-                                            Console.WriteLine("Entered in foreach " + fav.postFavoriteId);
-                                            @if (item.Id == fav.postFavoriteId)
-                                            {
-                                                <form asp-action="deleteFavoritePost" method="post" asp-controller="home" style="float: right" asp-route-userNameFavorite="@User.Identity.Name" asp-route-postFavoriteId="@fav.postFavoriteId">
-                                                    <button class="favoriteButton" type="submit" style="color: #ffff"><i class="fa-solid fa-bookmark"></i></button>
-                                                </form>
-                                                break;
-                                            }
-                                            else if (item.Id != fav.postFavoriteId)
-                                            {
-                                                Console.WriteLine("Post is not favorite");
-                                                <form asp-action="favoritePost" asp-controller="home" style="float: right" asp-route-userName="@User.Identity.Name" asp-route-postId="@item.Id">
-                                                    <button class="favoriteButton" type="submit" style="color: #ffff"><i class="fa-regular fa-bookmark"></i></button>
-                                                </form>
-                                            }
-                                        }
-                                    } else
-                                    {
-                                        Console.WriteLine("Favorite table = null ");
-                                        <form asp-action="favoritePost" asp-controller="home" style="float: right" asp-route-userName="@User.Identity.Name" asp-route-postId="@item.Id">
-                                            <button class="favoriteButton" type="submit" style="color: #ffff"><i class="fa-regular fa-bookmark"></i></button>
-                                        </form>
-                                    }
-                                }   
-                            }
                         </div>
                     </div>
                 </div>
@@ -115,34 +121,35 @@
         </div>
     </div>
 
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-item" style="text-align:left">
-                <div class="developer">
-                    <p class="main_text"><b>Разработчик</b></p>
-                    <p class="footer_text"><b>Бозжанов Карим</b></p>
-                    <p class="footer_text"><b>Группа - РПОД4-21Р</b></p>
-                </div>
-            </div>
-            <div class="footer-item" style="text-align: left">
-                <div class="designer">
-                    <p class="main_text"><b>Дизайнер</b></p>
-                    <p class="footer_text"><b>Бауыржан Алишер</b></p>
-                    <p class="footer_text"><b>Группа - РПОД4-21Р</b></p>
-                </div>
-            </div>
-            <div class="footer-item" style="text-align: left">
-                <div class="contacts">
-                    <p class="main_text"><b>Связаться с нами</b></p>
-                    <p class="footer_text"><i class="fa-brands fa-instagram" style="padding-right: 5px"></i> <b>RPOD4_21R</b></p>
-                    <p class="footer_text"><i class=" fa-solid fa-phone" style="padding-right: 5px"></i><b>+7 (707) 233 55 99</b></p>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/jquery.min.js></script>
+    <script src="~/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/jquery-3.6.3.js"></script>
+    <script src="~/js/jquery-3.6.3.min.js"></script>
 </body>
 </html>
+
+<script type="text/javascript">
+    function modalWindow(id) {
+        $.ajax({
+            url: "/home/userInfo/" + id,
+            method: "GET",
+            type: "json",
+            dataType: "json",
+            success: function(data) {
+                data = JSON.parse(data);
+                console.log(data);
+                $("#userNameText b").html(data.Name);
+                $("#groupText b").html(data.Group);
+                $("#curatorName b").html(data.Curator);
+                $("#instText b").html(data.Instagram);
+                $("#emailText b").html(data.Email);
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    }
+</script>

@@ -1,15 +1,21 @@
-﻿body {
+﻿html {
+    padding: 0px;
+    margin: 0px;
+}
+
+body {
     background-color: #1b1919;
     margin: 0px 0px;
 }
+
+.right_text {
+    padding-left: 15px;
+    padding-top: 6px;
+}
+
 .headerColor {
     background: rgb(228,170,219);
     background: linear-gradient(90deg, rgba(228,170,219,1) 7%, rgba(14,116,215,1) 100%);
-}
-
-
-.right_text {
-    display: inline;
 }
 
 .fixed-button {
@@ -39,7 +45,7 @@
 
 .card-body {
     background-color: #2D2D2D;
-    border-radius: 20px;
+    border-radius: 15px;
 }
 
 .card {
@@ -58,6 +64,17 @@
     color: #ffff;
 }
 
+.edit:hover {
+    background: rgb(195,255,223);
+    background: linear-gradient(90deg, rgba(195,255,223,1) 7%, rgba(7,90,93,1) 100%);
+    height: 50%;
+    padding: 10px;
+    padding-right: 20px;
+    padding-left: 20px;
+    border-radius: 15px;
+    color: #2D2D2D;
+}
+
 .git {
     background: rgb(54,54,54);
     background: linear-gradient(90deg, rgba(54,54,54,1) 0%, rgba(17,23,23,1) 94%, rgba(17,23,23,1) 100%);
@@ -67,6 +84,18 @@
     padding-left: 20px;
     border-radius: 15px;
     color: #ffff;
+    margin-left: 10px;
+}
+
+.git:hover {
+    background: rgb(54,54,54);
+    background: linear-gradient(90deg, rgba(54,54,54,1) 0%, rgba(17,23,23,1) 94%, rgba(17,23,23,1) 100%);
+    height: 50%;
+    padding: 8px;
+    padding-right: 20px;
+    padding-left: 20px;
+    border-radius: 15px;
+    color: #2D2D2D;
     margin-left: 10px;
 }
 
@@ -91,6 +120,18 @@
     padding-left: 20px;
     border-radius: 15px;
     color: #ffff;
+    margin-left: 10px;
+}
+
+.download:hover {
+    background: rgb(138,204,141);
+    background: linear-gradient(90deg, rgba(138,204,141,1) 0%, rgba(11,144,66,1) 100%);
+    height: 50%;
+    padding: 10px;
+    padding-right: 20px;
+    padding-left: 20px;
+    border-radius: 15px;
+    color: #2D2D2D;
     margin-left: 10px;
 }
 
@@ -296,6 +337,18 @@ input {
     margin-left: 10px;
 }
 
+.presentation:hover {
+    background: rgb(221,148,51);
+    background: linear-gradient(90deg, rgba(221,148,51,1) 4%, rgba(203,140,44,1) 13%, rgba(223,134,51,1) 25%, rgba(215,126,42,1) 32%, rgba(210,116,33,1) 42%, rgba(203,114,31,1) 52%, rgba(213,110,13,1) 61%, rgba(215,97,24,1) 76%, rgba(214,89,21,1) 89%);
+    height: 50%;
+    padding: 10px;
+    padding-right: 20px;
+    padding-left: 20px;
+    border-radius: 15px;
+    color: #2D2D2D;
+    margin-left: 10px;
+}
+
 .presentationEdit {
     background: rgb(221,148,51);
     background: linear-gradient(90deg, rgba(221,148,51,1) 4%, rgba(203,140,44,1) 13%, rgba(223,134,51,1) 25%, rgba(215,126,42,1) 32%, rgba(210,116,33,1) 42%, rgba(203,114,31,1) 52%, rgba(213,110,13,1) 61%, rgba(215,97,24,1) 76%, rgba(214,89,21,1) 89%);
@@ -376,11 +429,12 @@ input[type=radio]:checked + .radio_button{
 }
 
 .footer {
+    bottom: 0;
     background-color: #2D2D2D;
     display: grid;
     grid-template-areas: "a";
     padding-top: 10px;
-    padding-bottom: 5px;
+    padding-bottom: 10px;
 }
 
 
@@ -394,7 +448,7 @@ input[type=radio]:checked + .radio_button{
 
 .footer-item {
     display: inline-block;
-    margin-left: 100px;
+    margin-left: 90px;
 }
 
 .footer-item p {
@@ -413,4 +467,93 @@ input[type=radio]:checked + .radio_button{
 .footer_text {
     color: #DCDCDC;
     font-size: medium;
+}
+
+
+.search_field {
+    border: none;
+    border-bottom: 1px solid white;
+    background-color: transparent;
+    color: #ffff;
+    outline: none;
+    display: inline-block;
+    padding: 0px;
+    width: 70%;
+}
+
+.search_field::-webkit-input-placeholder {
+    color: white;
+}
+
+.header_item {
+    display: inline-block;
+}
+
+
+.main_container {
+    margin: 0px 0px;
+    padding: 0px 0px;
+}
+
+.userModal {
+    background-color: transparent;
+    border: none;
+}
+
+.userModal:focus {
+    outline: none !important
+}
+
+
+.modalClose {
+    background-color: transparent;
+    border: none;
+    color: red;
+}
+
+.modalClose:focus {
+    outline: none !important
+}
+
+.mainModal {
+    background-color: #2D2D2D;
+    border-radius: 20px;
+}
+
+.modalContent {
+    background-color: #1b1919;
+    border-radius: 20px;
+}
+
+.modal_header {
+    padding-top: 10px;
+    padding-right: 10px;
+    font-size: 20px;
+}
+
+.modal_body {
+    padding-left: 25px;
+    padding-bottom: 25px;
+}
+
+.itemText {
+    color: #696969;
+}
+
+
+.email-text {
+    color: rgb(125,74,207);
+    background-image: linear-gradient(90deg, rgba(125,74,207,1) 47%, rgba(112,59,213,1) 65%);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    margin-right: 20px;
+}
+
+
+.colorItemText {
+    color: #C89FEB;
+}
+
+.changeUser {
+    background-color: #4772ba;
 }

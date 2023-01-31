@@ -5,6 +5,7 @@ namespace projects_portal.Models
     public class Projects
     {
         public int Id { get; set; }
+        public int userId { get; set; }
         public string NameOfProject { get; set; }
         public string Name { get; set; }
         public DateTime TimeOfCreating { get; set; }

@@ -30,6 +30,28 @@ function addSite() {
     siteInput.setAttribute('type', 'text');
 }
 
+function addEmail() {
+    var emailInput = document.getElementById("emailInput");
+    var emailButton = document.getElementById("emailButton");
+    var saveUser = document.getElementById("saveUser");
+    var cancelBtn = document.getElementById("cancelBtn");
+    cancelBtn.style.display = "block"
+    saveUser.style.display = "block";
+    emailButton.style.display = "none";
+    emailInput.setAttribute('type', 'text');
+}
+
+function cancelChangeUser() {
+    var emailInput = document.getElementById("emailInput");
+    var emailButton = document.getElementById("emailButton");
+    var saveUser = document.getElementById("saveUser");
+    var cancelBtn = document.getElementById("cancelBtn");
+    cancelBtn.style.display = "none"
+    saveUser.style.display = "none";
+    emailButton.style.display = "block";
+    emailInput.setAttribute('type', 'hidden');
+}
+
 function imageEdit(editImageInput) {
     var reader = new FileReader();
     var image = editImageInput.files[0];
@@ -45,7 +67,7 @@ function imageName(imageInput) {
     var image = imageInput.files[0];
     var imageBlock = document.getElementById("imageBlock");
     var imageBtn = document.getElementById("imageBtn");
-    imageBtn.style.display = "none"
+    imageBtn.style.display = "none";
     imageBlock.style.display = "block";
     reader.readAsDataURL(image);
     reader.onload = function (e) {
@@ -56,8 +78,15 @@ function imageName(imageInput) {
 function studentButton() {
     var studentBtn = document.getElementById("student_btn");
     var teacherBtn = document.getElementById("teacher_btn");
-    var groupInput = document.getElementById("groupInput")
+    var groupInput = document.getElementById("groupInput");
+    var curatorInput = document.getElementById("curatorInput");
+    var codeInput = document.getElementById("codeInput");
     groupInput.type = "text";
+    groupInput.required = "true";
+    curatorInput.type = "text";
+    codeInput.type = "hidden";
+    curatorInput.required = "true";
+    codeInput.required = "false";
     studentBtn.style.zIndex = "99";
     teacherBtn.style.zIndex = "98";
 }
@@ -65,8 +94,15 @@ function studentButton() {
 function teacherButton() {
     var teacherBtn = document.getElementById("teacher_btn");
     var studentBtn = document.getElementById("student_btn");
-    var groupInput = document.getElementById("groupInput")
+    var groupInput = document.getElementById("groupInput");
+    var curatorInput = document.getElementById("curatorInput");
+    var codeInput = document.getElementById("codeInput");
     groupInput.type = "hidden";
+    groupInput.required = "false";
+    curatorInput.type = "hidden";
+    codeInput.type = "password";
+    codeInput.required = "true";
+    curatorInput.required = "false";
     teacherBtn.style.zIndex = "99";
     studentBtn.style.zIndex = "98";
 }

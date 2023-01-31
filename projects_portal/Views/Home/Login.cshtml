@@ -1,4 +1,7 @@
 ﻿@model projects_portal.ViewModels.LoginModel
+@{
+    Layout = "_Layout";
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,27 +16,27 @@
     <div class="content">
         <div class="container">
             <div class="registration_header pt-5">
-                <h4 align="center" class="text-light">Welcome to HZ_Project</h4>
-                <h4 align="center" class="text-light">Let's get started</h4>
-                <h4 align="center" class="register_text mt-3" style="padding-bottom: 10px"><b>Login</b></h4>
+                <h4 align="center" class="text-light">Добро пожаловать в MonoLOG</h4>
+                <h4 align="center" class="text-light">Давайте начнем</h4>
+                <h4 align="center" class="register_text mt-3" style="padding-bottom: 10px"><b>Вход</b></h4>
             </div>
             <form asp-action="Login" asp-controller="Home" enctype="multipart/form-data" asp-antiforgery="true">
                 <div class="validation text-light" style="margin-left: 35%" asp-validation-summary="ModelOnly"></div>
                 <div class="form-group" align="center">
-                    <input type="text" asp-for="Name" class="register-input" placeholder="Name" autocomplete="off" />
-                    <input type="password" asp-for="Password" class="register-input" placeholder="Password" autocomplete="off" />
+                    <input type="text" asp-for="Name" class="register-input" placeholder="ФИО" autocomplete="off" />
+                    <input type="password" asp-for="Password" class="register-input" placeholder="Пароль" autocomplete="off" />
                 </div>
                 <div class="haveAcc" style="margin-left: 40%; float: left; font-size: 13px" align="center">
-                    <p class="text-light" style="margin-bottom: 0px">No account click here</p>
+                    <p class="text-light" style="margin-bottom: 0px">У вас еще нет аккаунта</p>
                     <p class="text-light" style="margin-bottom: 0px">
                         <i class="fa-solid fa-arrow-right-long" style="padding-left: 5px; padding-right: 5px"></i>
                         <a class="signIn_text" asp-action="Register" asp-controller="home">
-                            <b>Sign up</b>
+                            <b>Регистрация</b>
                         </a>
                     </p>
                 </div>
                 <div class="form-group" align="center" style="display: inline">
-                    <button type="submit" class="signUp_button btn rounded-3 mt-1" style="color: #ffff; margin-left: 15px" align="right">Sign In</button>
+                    <button type="submit" class="signUp_button btn rounded-3 mt-1" style="color: #ffff; margin-left: 15px" align="right">Войти</button>
                 </div>
             </form>
         </div>

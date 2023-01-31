@@ -9,25 +9,27 @@
 </head>
 <body>
     <header class="headerColor">
-        <div class="container pb-3 pt-2 mb-4">
-            <div class="header-menu">
-                <div class="header-item">
-                    <a style="text-decoration: none" asp-action="Index" asp-controller="home"><h4 class="text-light" style="float: left">MonoLOG</h4></a>
-                </div>
+        <div class="container pb-2 pt-2 mb-4">
+            <div class="header-item">
+                <a style="text-decoration: none" asp-action="Index" asp-controller="home"><h4 class="text-light" style="float: left">MonoLOG</h4></a>
+            </div>
+            <div class="header_main" align="right">
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <div align="right" class="header-item">
+                    <div class="header_item">
                         <h3 class="right_text text-light" style="font-size: 15px">@User.Identity.Name / <a asp-action="Logout" asp-controller="home" style="text-decoration: none" class="text-light">Выйти</a></h3>
                     </div>
-                } else
+                }
+                else
                 {
-                    <div align="right" class="header-item">
+                    <div class="header_item">
                         <h3 class="right_text text-light" style="font-size: 15px"><a asp-action="Login" asp-controller="home" class="text-light" style="text-decoration: none">Войти</a> / <a asp-action="Register" asp-controller="home" style="text-decoration: none" class="text-light">Зарегистрироваться</a></h3>
                     </div>
                 }
             </div>
         </div>
     </header>
+
     <div class="main_container">
         <main role="main">
             @RenderBody()
