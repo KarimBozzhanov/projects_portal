@@ -32,7 +32,6 @@ namespace projects_portal.Controllers
     {
 
         private ApplicationDbContext db;
-        private int pageSize = 10;
         IWebHostEnvironment app;
 
         public HomeController(ApplicationDbContext context, IWebHostEnvironment appEnvironment)
@@ -204,7 +203,7 @@ namespace projects_portal.Controllers
                         db.projects.Add(new Projects 
                         { 
                             userId = user.Id, NameOfProject = createModel.NameOfProject, Name = user.Name, 
-                            TimeOfCreating = DateTime.UtcNow, Group = user.Group, 
+                            TimeOfCreating = DateTime.Now, Group = user.Group, 
                             Description = createModel.Description, 
                             PresentationName = uploadedPresentation.FileName, 
                             PresentationPath = presentationPath, apkFileName = null, 
@@ -246,7 +245,7 @@ namespace projects_portal.Controllers
                         User user = await db.User.FirstOrDefaultAsync(u => u.Name == User.Identity.Name);
                         db.projects.Add(new Projects { 
                             userId = user.Id, NameOfProject = createModel.NameOfProject, 
-                            Name = user.Name, TimeOfCreating = DateTime.UtcNow, 
+                            Name = user.Name, TimeOfCreating = DateTime.Now, 
                             Group = user.Group, Description = createModel.Description, 
                             PresentationName = uploadedPresentation.FileName, 
                             PresentationPath = presentationPath, apkFileName = null, 
@@ -260,7 +259,7 @@ namespace projects_portal.Controllers
                         User user = await db.User.FirstOrDefaultAsync(u => u.Name == User.Identity.Name);
                         db.projects.Add(new Projects { 
                             userId = user.Id, NameOfProject = createModel.NameOfProject, 
-                            Name = user.Name, TimeOfCreating = DateTime.UtcNow, 
+                            Name = user.Name, TimeOfCreating = DateTime.Now, 
                             Group = user.Group, Description = createModel.Description, 
                             PresentationName = null, PresentationPath = null, apkFileName = null, 
                             apkFilePath = null, urlGit = createModel.urlGit, 

@@ -48,7 +48,7 @@
                                     {
                                         if (item.urlGit != null)
                                         {
-                                            <a class="git text-light" href="@item.urlGit" style="text-decoration: none"><b>GitHub</b><img src="/Images/github.png" style="width: 35px; height:25px; padding-left: 10px; margin-bottom: 5px" /></a>
+                                            <a class="git text-light" href="@item.urlGit" style="text-decoration: none"><b>GitHub</b><img src="/staticFiles/github.png" style="width: 35px; height:25px; padding-left: 10px; margin-bottom: 5px" /></a>
                                         }                                        
                                     }
                                 }
@@ -82,11 +82,11 @@
                                 @if (item.PresentationPath != null)
                                 {
                                     @if (item.apkFilePath == null)
-                                    {
-                                        <a class="presentation text-light" id="presentationText" href="@item.PresentationPath" download="@item.PresentationName" style="text-decoration: none; margin-right: 15px"><b>Презентация</b><i class="fa-regular fa-folder" style="padding-left: 10px"></i></a>
+                                    {   
+                                        <a class="presentation" id="presentationText" href="@item.PresentationPath" download="@item.PresentationName" style="text-decoration: none; margin-right: 15px"><b>Презентация</b><i class="fa-regular fa-folder" style="padding-left: 10px"></i></a>
                                     } else
                                     {
-                                        <a class="presentation text-light" id="presentationText" href="@item.PresentationPath" download="@item.PresentationName" style="text-decoration: none"><b>Презентация</b><i class="fa-regular fa-folder" style="padding-left: 10px"></i></a>
+                                        <a class="presentation" id="presentationText" href="@item.PresentationPath" download="@item.PresentationName" style="text-decoration: none"><b>Презентация</b><i class="fa-regular fa-folder" style="padding-left: 10px"></i></a>
                                     }
                                 }
                                 @if (item.apkFilePath != null)

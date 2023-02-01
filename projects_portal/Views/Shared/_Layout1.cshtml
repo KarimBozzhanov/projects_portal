@@ -79,7 +79,10 @@
                         <h4 class="colorItemText" id="emailText"><b></b></h4>
                     </div>
                     <div class="modal-item" align="right" style="padding-bottom: 20px; padding-right: 20px;">
-                        <<a class="changeUser text-light" asp-action="changeUser" asp-controller="home">Изменить</a>
+                        @foreach(var user in Model.users.Where(u => u.Name == User.Identity.Name))
+                        {
+                            <a class="changeUser text-light" asp-action="changeUser" asp-controller="home" asp-route-id="@user.Id">Изменить</a>
+                        }
                     </div>
                 </div>
             </div>
