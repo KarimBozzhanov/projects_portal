@@ -28,14 +28,16 @@ body {
     color: #ffffff;
     width: 48px;
     height: 48px;
+    border: none;
     border-radius: 50%;
     transition: 0.3s ease-in-out;
 }
 
+
 .fixed-button i {
     position: relative;
     top: 12px;
-    left: 17px;
+    left: 16px;
 }
 
 .fixed-button:hover {
@@ -364,7 +366,7 @@ input {
 .user-footer {
     position: absolute;
     right: 10px;
-    bottom: 15px;
+    bottom: 0px;
 }
 
 .favoriteButton {
@@ -479,6 +481,7 @@ input[type=radio]:checked + .radio_button{
     display: inline-block;
     padding: 0px;
     width: 70%;
+    margin-right: 30px;
 }
 
 .search_field::-webkit-input-placeholder {
@@ -504,17 +507,6 @@ input[type=radio]:checked + .radio_button{
     outline: none !important
 }
 
-
-.modalClose {
-    background-color: transparent;
-    border: none;
-    color: red;
-}
-
-.modalClose:focus {
-    outline: none !important
-}
-
 .mainModal {
     background-color: #2D2D2D;
     border-radius: 20px;
@@ -523,12 +515,6 @@ input[type=radio]:checked + .radio_button{
 .modalContent {
     background-color: #1b1919;
     border-radius: 20px;
-}
-
-.modal_header {
-    padding-top: 10px;
-    padding-right: 10px;
-    font-size: 20px;
 }
 
 .modal_body {
@@ -554,9 +540,246 @@ input[type=radio]:checked + .radio_button{
     color: #C89FEB;
 }
 
-.changeUser {
-    background: rgb(228,170,219);
-    background: linear-gradient(90deg, rgba(228,170,219,1) 7%, rgba(14,116,215,1) 100%);
-    padding: 10px;
+.categories {
+    display: inline;
+}
+
+.categories_btn {
+    background-color: #2D2D2D;
+}
+
+.categories_btn:hover {
+   background-color: #2D2D2D;
+}
+
+.categories_menu {
+    background-color: #1C1C1C;
+}
+
+.categories_item {
+    padding-left: 10px;
+    background-color: transparent;
+    border: none;
+    margin-bottom: 5px;
+}
+
+.categories_item:focus {
+    outline: none !important
+}
+
+.create_dropdown {
+    padding-left: 10px;
+    background-color: #2D2D2D;
+}
+
+.create_item{
+    padding-bottom: 10px;
+}
+
+.projectCheckBox {
+    display: inline;
+    margin-right: -20px;
+}
+
+.graduateCheckBox {
+    display: inline;
+}
+
+.create_radio_button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #1E1B1B;
+    padding: 4px 30px;
+    border: 3px solid #1E1B1B;
     border-radius: 10px;
+    font-size: 18px;
+}
+
+input[type=radio]:checked + .create_radio_button {
+    background: #2D2D2D
+}
+
+.create_radio_text {
+    color: rgb(208,175,210);
+    background-image: linear-gradient(90deg, rgba(208,175,210,1) 0%, rgba(82,14,145,1) 87%);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+}
+
+
+.user_block {
+    display:inline;
+    float: left;
+    padding-right: 40px;
+}
+
+.curator_block {
+    display: inline;
+    float: left;
+}
+
+.curator_item {
+    color: #696969;
+    padding-right: 40px;
+}
+
+.contacts_block {
+    display: inline;
+    float:left;
+}
+
+.student_email {
+    color: #C89FEB;
+}
+
+.student_inst {
+    color: #C89FEB;
+    margin-bottom: 0px;
+}
+
+
+.user-card-body {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 30px;
+    background-color: #2D2D2D;
+    border-radius: 15px;
+    display: inline;
+    float:left;
+    width: 91%;
+}
+
+.user_card {
+    background-color: #1b1919;
+    margin-bottom: 30px;
+}
+
+.user_projects {
+    float: right;
+    display: inline;
+    padding: 25px 26px;
+    margin-left: 20px;
+    background-color: #2D2D2D;
+    border-radius: 20px;
+}
+
+.add_student {
+    display: inline;
+}
+
+.add_btn {
+    float: right;
+    margin-right: 15px;
+    margin-top: 3px;
+    background-color: transparent;
+    border: none;
+}
+
+.add_btn:focus {
+    outline: none !important
+}
+
+.user_container{
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
+.addFavorite {
+    display: inline;
+    background-color: transparent;
+    border: none;
+    padding: 0px 0px;
+}
+
+.addFavorite:focus {
+    outline: none !important;
+}
+
+.favorite {
+    display: inline;
+    float: right;
+    margin-right: 10px;
+}
+
+.delete_user {
+    float: right;
+    margin-right: 15px;
+    margin-top: 3px;
+}
+
+.delete_btn {
+    background-color: transparent;
+    border: none;
+}
+
+.delete_btn:focus {
+    outline: none !important
+}
+
+.my_students {
+    background-color: #484444;
+    padding: 8px 50px;
+    border-radius: 15px;
+}
+
+
+.my_students:hover {
+    color: #ffff;
+    text-decoration: none;
+}
+
+.add_student_btn {
+    background-color: #7BCE8D;
+    padding: 8px 35px;
+    border-radius: 15px;
+}
+
+.add_student_btn:hover {
+    color: #ffff;
+    text-decoration: none;
+}
+
+.add_student_modal {
+    margin-top: 20px;
+    display: inline;
+    float: right;
+    margin-right: 20px; 
+}
+
+.my_students_modal {
+    margin-top: 20px;
+    margin-right: 15px;
+    display: inline;
+    float: left;
+}
+
+.changeUser_modal {
+    display: inline;
+    float: left;
+    padding-top: 15px;
+    padding-left: 25px;
+}
+
+.modalClose {
+    display: inline;
+    float: right;
+}
+
+.close_btn{
+    background-color: transparent;
+    border: none;
+    color: red;
+    padding: 15px;
+    font-size: 20px;
+}
+
+.close_btn:focus{
+    outline: none !important;
+}
+
+.changeUser {
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
 }

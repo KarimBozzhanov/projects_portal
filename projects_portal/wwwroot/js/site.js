@@ -9,7 +9,9 @@
 function apkName(apkInput) {
     var apk = apkInput.files;
     var apkText = document.getElementById("apkText");
+    var sliced = text.sliced(0, 10);
     for (var i = 0; i < apk.length; i++) {
+
         apkText.innerHTML = apk[i].name;
     }
 }
@@ -105,4 +107,18 @@ function teacherButton() {
     curatorInput.required = "false";
     teacherBtn.style.zIndex = "99";
     studentBtn.style.zIndex = "98";
+}
+
+function projectButton() {
+    var projectBtn = document.getElementById("project_btn");
+    var graduateBtn = document.getElementById("graduate_btn");
+    projectBtn.style.zIndex = "99";
+    graduateBtn.style.zIndex = "98";
+}
+
+function graduateButton() {
+    var graduateBtn = document.getElementById("graduate_btn");
+    var projectBtn = document.getElementById("project_btn");
+    graduateBtn.style.zIndex = "99";
+    projectBtn.style.zIndex = "98";
 }

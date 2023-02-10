@@ -23,8 +23,8 @@
             <form asp-action="Login" asp-controller="Home" enctype="multipart/form-data" asp-antiforgery="true">
                 <div class="validation text-light" style="margin-left: 35%" asp-validation-summary="ModelOnly"></div>
                 <div class="form-group" align="center">
-                    <input type="text" asp-for="Name" class="register-input" placeholder="ФИО" autocomplete="off" />
-                    <input type="password" asp-for="Password" class="register-input" placeholder="Пароль" autocomplete="off" />
+                    <input type="text" asp-for="Name" class="register-input" placeholder="ФИО" autocomplete="off"  required/>
+                    <input type="password" asp-for="Password" class="register-input" placeholder="Пароль" autocomplete="off" required/>
                 </div>
                 <div class="haveAcc" style="margin-left: 40%; float: left; font-size: 13px" align="center">
                     <p class="text-light" style="margin-bottom: 0px">У вас еще нет аккаунта</p>

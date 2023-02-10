@@ -19,5 +19,6 @@ namespace projects_portal.Models
         public string siteUrl { get; set; }
         public string ImageName { get; set; }
         public string ImagePath { get; set; }
+        public string categoryType { get; set; }
     }
 }

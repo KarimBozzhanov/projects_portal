@@ -17,11 +17,11 @@
     {
         <a asp-action="Create" asp-controller="Home" asp-route-userName="@User.Identity.Name" class="fixed-button"><i class="fa-solid fa-plus"></i></a>
     }
-
     <div class="content">
         <div class="container">
             @foreach (var item in Model.projects)
             {
+                int favoriteFailed = 0;
                 <div class="card border border-0">
                     <div class="card-body">
                         <div class="user-header">
@@ -113,7 +113,32 @@
                         </div>
                         <div class="user-footer">
                             <a class="site-url text-light" href="@item.siteUrl">@item.siteUrl</a>
-                            <p style="color: #696969; display: inline; margin-right: 10px"><b>@item.TimeOfCreating</b></p>
+                            <p style="color: #696969; display: inline; float: left"><b>@item.TimeOfCreating</b></p>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                if (ViewData["role"].Equals("teacher") || ViewData["role"].Equals("admin"))
+                                {
+                                    @foreach (var fav in Model.favorite)
+                                    {
+                                        if (fav.postId == item.Id && fav.userNameFavorite == User.Identity.Name)
+                                        {
+                                            <form class="favorite" asp-action="deleteFavoritePost" asp-controller="home" asp-route-postFavoriteId="@item.Id" asp-route-userNameFavorite="@User.Identity.Name">
+                                                <button class="addFavorite"><i class="fa-solid fa-bookmark"></i></button>
+                                            </form>
+                                        }
+                                        else
+                                        {
+                                            favoriteFailed += 1;
+                                        }
+                                    }
+                                    @if (favoriteFailed == Model.favorite.Count())
+                                    {
+                                        <form class="favorite" asp-action="favoritePost" asp-controller="home" asp-route-postId="@item.Id">
+                                            <button class="addFavorite"><i class="fa-regular fa-bookmark"></i></button>
+                                        </form>
+                                    }
+                                }
+                            }
                         </div>
                     </div>
                 </div>

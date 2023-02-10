@@ -12,5 +12,6 @@ namespace projects_portal.Models
         public string Curator { get; set; }
         public string Email { get; set; }
         public string Instagram { get; set; }
+        public string teacherName { get; set; }
     }
 }
