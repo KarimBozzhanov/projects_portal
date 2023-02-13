@@ -1,0 +1,159 @@
+﻿@model projects_portal.Models.AllModels;
+
+@{
+    Layout = "_Layout3";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/css/bootstrap.min.css  />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <a asp-action="Create" asp-controller="Home" asp-route-userName="@User.Identity.Name" class="fixed-button"><i class="fa-solid fa-plus"></i></a>
+    }
+    <div class="content">
+        <div class="container">
+            @foreach (var item in Model.projects)
+            {
+                int favoriteFailed = 0;
+                <div class="card border border-0">
+                    <div class="card-body">
+                        <div class="user-header">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="username text-bg-dark" style="margin-left: 10px; margin-top: 4px">
+                                        <h4 class="text-light" style="margin-bottom: 0px"><button class="userModal text-light" onclick="modalWindow(@item.Id)" style="padding-left: 0px;" data-bs-toggle="modal" data-bs-target="#userPostModal"><b>@item.Name</b></button></h4>
+                                        <p style="color: #696969"><b>@item.Group</b></p>
+                                    </div>
+                                </div>
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    @if (item.Name == User.Identity.Name || ViewData["role"].Equals("admin"))
+                                    {
+                                        @if (item.apkFilePath == null && item.PresentationPath == null)
+                                        {
+                                            <a class="edit" asp-action="editPost" asp-controller="home" asp-route-id="@item.Id" asp-route-userName="@item.Name" style="text-decoration: none; margin-right: 15px"><b>Редактировать</b><i class="fa-solid fa-sliders" style="padding-left: 15px"></i></a>
+                                        }
+                                        else
+                                        {
+                                            <a class="edit" asp-action="editPost" asp-controller="home" asp-route-id="@item.Id" asp-route-userName="@item.Name" style="text-decoration: none"><b>Редактировать</b><i class="fa-solid fa-sliders" style="padding-left: 15px"></i></a>
+                                        }
+                                    }
+                                    @if (ViewData["role"].Equals("teacher") || ViewData["role"].Equals("admin") || item.Name == User.Identity.Name)
+                                    {
+                                        if (item.urlGit != null)
+                                        {
+                                            <a class="git text-light" href="@item.urlGit" style="text-decoration: none"><b>GitHub</b><img src="/staticFiles/github.png" style="width: 35px; height:25px; padding-left: 10px; margin-bottom: 5px" /></a>
+                                        }
+                                    }
+                                }
+                                <div class="modal fade" id="userPostModal" tabindex="-1" aria-labelledby="userPostModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modalContent modal-content">
+                                            <div class="modal_header" align="right">
+                                                <button type="button" class="close_btn" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+                                            </div>
+                                            <div class="modal_body">
+                                                <div class="modal-item">
+                                                    <h4 class="text-light" id="userNameText" style="margin-bottom: 0px; padding-bottom: 5px"><b></b></h4>
+                                                </div>
+                                                <div class="modal-item">
+                                                    <h5 class="itemText" id="groupText"><b></b></h5>
+                                                </div>
+                                                <div class="modal-item">
+                                                    <h4 class="text-light" style="padding-top: 5px" id="curatorItemText"><b>Куратор</b></h4>
+                                                    <h5 class="itemText" id="curatorName"><b></b></h5>
+                                                </div>
+                                                <div class="modal-item" style="margin-top: 20px">
+                                                    <h4 class="colorItemText" id="instText"><b></b></h4>
+                                                </div>
+                                                <div class="modal-item">
+                                                    <h4 class="colorItemText" id="emailText"><b></b></h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @if (item.PresentationPath != null)
+                                {
+                                    @if (item.apkFilePath == null)
+                                    {
+                                        <a class="presentation" id="presentationText" href="@item.PresentationPath" download="@item.PresentationName" style="text-decoration: none; margin-right: 15px"><b>Презентация</b><i class="fa-regular fa-folder" style="padding-left: 10px"></i></a>
+                                    }
+                                    else
+                                    {
+                                        <a class="presentation" id="presentationText" href="@item.PresentationPath" download="@item.PresentationName" style="text-decoration: none"><b>Презентация</b><i class="fa-regular fa-folder" style="padding-left: 10px"></i></a>
+                                    }
+                                }
+                                @if (item.apkFilePath != null)
+                                {
+                                    <a class="download" href="@item.apkFilePath" download="@item.apkFileName" style="text-decoration: none; margin-right: 15px"><b>Скачать</b><i class="fa-regular fa-folder" style="padding-left: 15px"></i></a>
+                                }
+                            </div>
+                            <hr style="background-color: #696969; margin-top: 0px; margin-bottom: 30px" />
+                        </div>
+                        <div class="user-content">
+                            @if (item.ImagePath != null)
+                            {
+                                <div class="box">
+                                    <img style="float: left" src="@Url.Content(item.ImagePath)">
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="box">
+                                    <p class="image_box text-light" float="left" align="center" style="padding-top: 50%">MonoLog</p>
+                                </div>
+                            }
+                            <p class="title text-light" style="font-size: 25px; margin-bottom: 0px;">@item.NameOfProject</p>
+                            <p class="description line-limit-length text-light" style="display: inline">@item.Description</p>
+                        </div>
+                        <div class="user-footer">
+                            <a class="site-url text-light" href="@item.siteUrl">@item.siteUrl</a>
+                            <p style="color: #696969; display: inline; float: left"><b>@item.TimeOfCreating</b></p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <script src="~/js/jquery.min.js></script>
+    <script src="~/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/jquery-3.6.3.js"></script>
+    <script src="~/js/jquery-3.6.3.min.js"></script>
+</body>
+</html>
+
+<script type="text/javascript">
+    function modalWindow(id) {
+        $.ajax({
+            url: "/home/userInfo/" + id,
+            method: "GET",
+            type: "json",
+            dataType: "json",
+            success: function (data) {
+                data = JSON.parse(data);
+                console.log(data);
+                $("#userNameText b").html(data.Name);
+                $("#groupText b").html(data.Group);
+                $("#curatorName b").html(data.Curator);
+                $("#instText b").html(data.Instagram);
+                $("#emailText b").html(data.Email);
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    }
+</script>
