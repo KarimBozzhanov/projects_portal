@@ -19,14 +19,12 @@
                 <div class="card border border-0">
                     <div class="card-body">
                         <div class="user-header">
-                            <div class="row">
-                                <div class="col">
-                                    <div class="username text-bg-dark" style="margin-left: 10px; margin-top: 4px">
-                                        <h4 class="text-light" style="margin-bottom: 0px">@User.Identity.Name</h4>
-                                        <p style="color: #696969"><b>@ViewBag.Group</b></p>
-                                    </div>
+                            <div class="row" style="margin-left: 10px;">
+                                <div class="username text-bg-dark" style="margin-top: 4px">
+                                    <h4 class="text-light" style="margin-bottom: 0px">@User.Identity.Name</h4>
+                                    <p style="color: #696969"><b>@ViewBag.Group</b></p>
                                 </div>
-                                <div class="createType form-group">
+                                <div class="createType form-group" style="margin-left: 20px; margin-right: 30px">
                                     <div class="projectCheckBox" align="center">
                                         <label class="t-radio__control">
                                             <input type="radio" name="createCategory" onclick="projectButton()" hidden value="project" checked="checked" class="t-radio js-tilda-rule">

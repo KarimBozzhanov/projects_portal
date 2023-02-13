@@ -1,18 +1,23 @@
-﻿function presentationName(presentationInput) {
+﻿function limitStr(str, n, symb) {
+    if (!n && !symb) return str;
+    symb = symb || '...';
+    return str.substr(0, n - symb.length) + symb;
+}
+
+function presentationName(presentationInput) {
     var presentation = presentationInput.files;
     var presentationText = document.getElementById("presentationText");
     for (var i = 0; i < presentation.length; i++) {
-        presentationText.innerHTML = presentation[i].name;
+        presentationText.innerHTML = limitStr(presentation[i].name, 17);
     }
 }
 
 function apkName(apkInput) {
     var apk = apkInput.files;
     var apkText = document.getElementById("apkText");
-    var sliced = text.sliced(0, 10);
     for (var i = 0; i < apk.length; i++) {
 
-        apkText.innerHTML = apk[i].name;
+        apkText.innerHTML = limitStr(apk[i].name, 15);
     }
 }
 

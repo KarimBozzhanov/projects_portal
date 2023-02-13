@@ -114,7 +114,7 @@
                         @if (ViewData["role"].Equals("teacher"))
                         {
                             <div class="my_students_modal">
-                                <a class="my_students text-light" asp-action="changeUser" asp-controller="home">Работы студентов</a>
+                                <a class="my_students text-light" asp-action="studentsPage" asp-controller="home" asp-route-teacherName="@User.Identity.Name">Работы студентов</a>
                             </div>
                             <div class="add_student_modal">
                                 <a class="add_student_btn text-light" asp-action="studentsPage" asp-controller="home">Добавить студента</a>

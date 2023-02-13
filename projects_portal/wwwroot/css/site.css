@@ -269,11 +269,13 @@ input {
 }
 
 .gitInputClass {
+    padding-top: 8px;
+    padding-bottom: 8px;
     border: 1px solid #1b1919;
     background-color: #1b1919;
     border-radius: 10px;
     color: white;
-    margin-right: 10px;
+    width: 100%;
 }
 
 .site-text {
@@ -363,10 +365,11 @@ input {
     margin-left: 10px;
 }
 
+
 .user-footer {
     position: absolute;
-    right: 10px;
-    bottom: 0px;
+    right: 15px;
+    bottom: 15px;
 }
 
 .favoriteButton {
@@ -379,7 +382,9 @@ input {
     background-image: linear-gradient(90deg, rgba(125,74,207,1) 47%, rgba(112,59,213,1) 65%);
     -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;
-    margin-right: 20px;
+    margin-right: 15px;
+    display: inline;
+    float: left;
 }
 
 .studentCheckBox {
@@ -612,6 +617,7 @@ input[type=radio]:checked + .create_radio_button {
     display:inline;
     float: left;
     padding-right: 40px;
+    width: 30%;
 }
 
 .curator_block {
@@ -631,11 +637,14 @@ input[type=radio]:checked + .create_radio_button {
 
 .student_email {
     color: #C89FEB;
+    font-size: 23px;
+    margin-bottom: 0px;
 }
 
 .student_inst {
     color: #C89FEB;
     margin-bottom: 0px;
+    font-size: 20px;
 }
 
 
@@ -646,20 +655,27 @@ input[type=radio]:checked + .create_radio_button {
     background-color: #2D2D2D;
     border-radius: 15px;
     display: inline;
-    float:left;
-    width: 91%;
+    float: left;
+    width: 90%;
+    margin-bottom: 25px;
 }
 
 .user_card {
     background-color: #1b1919;
-    margin-bottom: 30px;
 }
 
 .user_projects {
-    float: right;
     display: inline;
-    padding: 25px 26px;
+    float:right;
     margin-left: 20px;
+    margin-top: 28px;
+}
+
+.user_projects_btn {
+    padding-top: 45px;
+    padding-bottom: 28px;
+    padding-left: 30px;
+    padding-right: 30px;
     background-color: #2D2D2D;
     border-radius: 20px;
 }
@@ -700,6 +716,7 @@ input[type=radio]:checked + .create_radio_button {
     display: inline;
     float: right;
     margin-right: 10px;
+    padding-left: 20px;
 }
 
 .delete_user {

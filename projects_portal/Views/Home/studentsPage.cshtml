@@ -28,8 +28,8 @@
                             <h5 class="curator_item" style="margin-bottom: 0px"><b>@item.Curator</b></h5>
                         </div>
                         <div class="contacts_block">
-                            <h4 class="student_email"><b>@item.Email</b></h4>
-                            <h5 class="student_inst"><b>@item.Instagram</b></h5>
+                            <p class="student_email"><b>@item.Email</b></p>
+                            <p class="student_inst"><b>@item.Instagram</b></p>
                         </div>
                         <div class="add_student">
                             @if (item.teacherName == null)
@@ -49,7 +49,7 @@
                         </div>
                     </div>
                     <div class="user_projects">
-                        <a><i class="fa-solid fa-arrow-right text-light" style="font-size: 40px;"></i></a>
+                        <a class="user_projects_btn" asp-action="studentProjects" asp-controller="home" asp-route-studentId="@item.Id"><i class="fa-solid fa-arrow-right text-light" style="font-size: 40px;"></i></a>
                     </div>
                 </div>
             }

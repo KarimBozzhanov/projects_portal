@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
+
 <body>
     <div class="content">
         <div class="container">
@@ -46,17 +47,17 @@
                                     }
                                     else
                                     {
-                                        <a class="presentationEdit text-light" id="presentationText" onclick="presentationEdit.click()" style="text-decoration: none"><b>@Model.PresentationName</b><i class="fa-regular fa-folder" style="padding-left: 10px"></i></a>
+                                        <a class="presentationEdit text-light" id="presentationText" onclick="presentationEdit.click()" style="text-decoration: none"><b id="presentationContainer">@Model.PresentationName</b><i class="fa-regular fa-folder" style="padding-left: 10px"></i></a>
                                     }
                                     <input id="presentationEdit" type="file" onchange="presentationName(this)" name="uploadedPresentation" accept=".pptx" hidden />
                                 </div>
                                 <div class="form-group mt-2">
                                     @if(Model.apkFilePath == null)
                                     {
-                                        <a class="download text-light" id="apkText" onclick="apkEdit.click()" style="text-decoration: none"><b>Добавить APK-файл</b><i class="fa-regular fa-file" style="padding-left: 10px"></i></a>
+                                        <a class="download text-light" id="apkText" onclick="apkEdit.click()" style="text-decoration: none; margin-right: 20px;"><b>Добавить APK-файл</b><i class="fa-regular fa-file" style="padding-left: 10px"></i></a>
                                     } else
                                     {
-                                        <a class="download text-light" id="apkText" onclick="apkEdit.click()" style="text-decoration: none"><b>@Model.apkFileName</b><i class="fa-regular fa-file" style="padding-left: 10px"></i></a>
+                                        <a class="download text-light" id="apkText" onclick="apkEdit.click()" style="text-decoration: none; margin-right: 20px;"><b id="apkContainer">@Model.apkFileName</b><i class="fa-regular fa-file" style="padding-left: 10px"></i></a>
                                     }
                                     <input id="apkEdit" type="file" onchange="apkName(this)" name="uploadedApk" accept=".apk" hidden />
                                 </div>
@@ -121,3 +122,19 @@
     <script src="~/js/site.js asp-append-version="true"></script>
 </body>
 </html>
+
+<script>
+    function limitStr(str, n) {
+        if (!n) return str;
+        symb = '...';
+        return str.substr(0, n - symb.length) + symb;
+    }
+
+    var presentation = document.getElementById("presentationContainer").innerText;
+    var presentationText = document.getElementById("presentationContainer");
+    presentationText.innerHTML = limitStr(presentation, 20);
+    var apk = document.getElementById("apkContainer").innerText;
+    var apkText = document.getElementById("apkContainer");
+    apkText.innerHTML = limitStr(apk, 20);
+    console.log(apk)
+</script>

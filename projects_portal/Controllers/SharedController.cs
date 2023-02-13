@@ -47,5 +47,20 @@ namespace projects_portal.Controllers
             allModels.projects = await db.projects.ToListAsync();
             return View(allModels);
         }
+
+        public async Task<IActionResult> _Layout3()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                User user = await db.User.FirstOrDefaultAsync(u => u.Name == User.Identity.Name);
+                ViewData["role"] = user.Role;
+                ViewData["userId"] = user.Id;
+            }
+            var allModels = new AllModels();
+            allModels.users = await db.User.Where(u => u.Name == User.Identity.Name).ToListAsync();
+            allModels.favorite = await db.favorite.ToListAsync();
+            allModels.projects = await db.projects.ToListAsync();
+            return View(allModels);
+        }
     }
 }

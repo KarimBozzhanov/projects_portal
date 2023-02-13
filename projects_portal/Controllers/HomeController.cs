@@ -49,26 +49,25 @@ namespace projects_portal.Controllers
                 ViewData["role"] = user.Role;
             }
             var allModels = new AllModels();
-            if (!String.IsNullOrEmpty(searchText))
+            if (!String.IsNullOrEmpty(category))
             {
-                if(!String.IsNullOrEmpty(category))
+                if (!String.IsNullOrEmpty(searchText))
                 {
-                    allModels.projects = db.projects.OrderByDescending(p => p.TimeOfCreating).Where(p => (p.Name.Contains(searchText) || p.NameOfProject.Contains(searchText)) && p.categoryType == category).ToList();
+                    allModels.projects = db.projects.OrderByDescending(p => p.TimeOfCreating).Where(p => (p.Name.Contains(searchText) || p.NameOfProject.Contains(searchText) || p.Group.Contains(searchText)) && p.categoryType == category).ToList();
                 } else
                 {
-                    allModels.projects = db.projects.OrderByDescending(p => p.TimeOfCreating).Where(p => p.Name.Contains(searchText) || p.NameOfProject.Contains(searchText)).ToList();
+                    allModels.projects = db.projects.OrderByDescending(a => a.TimeOfCreating).Where(p => p.categoryType == category).ToList();
                 }
             } else
             {
-                if (!String.IsNullOrEmpty(category))
+                if (!String.IsNullOrEmpty(searchText))
                 {
-                    allModels.projects = db.projects.OrderByDescending(a => a.TimeOfCreating).Where(p => p.categoryType == category).ToList();
+                    allModels.projects = db.projects.OrderByDescending(p => p.TimeOfCreating).Where(p => p.Name.Contains(searchText) || p.NameOfProject.Contains(searchText) || p.Group.Contains(searchText)).ToList();
                 } else
                 {
                     allModels.projects = db.projects.OrderByDescending(a => a.TimeOfCreating).ToList();
                 }
             }
-
             allModels.favorite = db.favorite.Where(f => f.userNameFavorite == User.Identity.Name).ToList();
             allModels.users = db.User.ToList();
             return View(allModels);
@@ -478,51 +477,6 @@ namespace projects_portal.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> favoritePage(string userName)
-        {
-            if (userName != null)
-            {
-                User user = await db.User.FirstOrDefaultAsync(u => u.Name == userName);
-                var allModels = new AllModels();
-                allModels.projects = db.projects.OrderByDescending(a => a.TimeOfCreating).ToList();
-                allModels.favorite = db.favorite.ToList();
-                allModels.users = db.User.ToList();
-                return View(allModels);
-            }   
-            return NotFound();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> favoritePost (int postId)
-        {
-            Projects project = await db.projects.FirstOrDefaultAsync(p => p.Id == postId);
-            db.favorite.Add(new favorite { 
-                postId = project.Id, NameOfProject = project.NameOfProject, Name = project.Name, 
-                TimeOfCreating = project.TimeOfCreating, Group = project.Group, 
-                Description = project.Description, PresentationName = project.PresentationName, 
-                PresentationPath = project.PresentationPath, apkFileName = project.apkFileName, 
-                apkFilePath = project.apkFilePath, urlGit =  project.urlGit, siteUrl =
-                project.siteUrl, ImageName = project.ImageName, ImagePath = project.ImagePath, 
-                userNameFavorite = User.Identity.Name
-            });
-            await db.SaveChangesAsync();
-            return RedirectToAction("Index");
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> deleteFavoritePost(string userNameFavorite, int? postFavoriteId)
-        {
-            favorite favoritePost = await db.favorite.FirstOrDefaultAsync(f => f.userNameFavorite == userNameFavorite && f.postId == postFavoriteId);
-            if (favoritePost != null)
-            {
-                db.Entry(favoritePost).State = EntityState.Deleted;
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-            return NotFound();
-        }
-
-        [HttpGet]
         public async Task<IActionResult> changeUser(int? id) 
         {
             if (id != null)
@@ -572,19 +526,36 @@ namespace projects_portal.Controllers
             return Json(NotFound());
         }
 
-        public async Task<IActionResult> studentsPage (string studentSearch)
+        public async Task<IActionResult> studentsPage (string teacherName, string studentSearch)
         {
             var allModels = new AllModels();
-            if (studentSearch != null)
+            if (!String.IsNullOrEmpty(teacherName))
             {
-                allModels.users = await db.User.Where(p => (p.Name.Contains(studentSearch) || p.Group.Contains(studentSearch))).ToListAsync();
+                if (studentSearch != null)
+                {
+                    allModels.users = await db.User.Where(p => (p.Name.Contains(studentSearch) || p.Group.Contains(studentSearch)) && p.teacherName == teacherName).ToListAsync();
+                }
+                else
+                {
+                    allModels.users = await db.User.Where(s => s.Role == "student" && s.teacherName == teacherName).ToListAsync();
+                }
+                allModels.projects = db.projects.ToList();
+                allModels.favorite = db.favorite.ToList();
+                return View(allModels);
             } else
             {
-                allModels.users = await db.User.Where(s => s.Role == "student").ToListAsync();
+                if (studentSearch != null)
+                {
+                    allModels.users = await db.User.Where(p => (p.Name.Contains(studentSearch) || p.Group.Contains(studentSearch))).ToListAsync();
+                }
+                else
+                {
+                    allModels.users = await db.User.Where(s => s.Role == "student").ToListAsync();
+                }
+                allModels.projects = db.projects.ToList();
+                allModels.favorite = db.favorite.ToList();
+                return View(allModels);
             }
-            allModels.projects = db.projects.ToList();
-            allModels.favorite = db.favorite.ToList();
-            return View(allModels);
             
         }
 
@@ -621,6 +592,36 @@ namespace projects_portal.Controllers
             }
             return NotFound();
         }
+
+        [HttpGet]
+        public async Task<IActionResult> studentProjects(int studentId, string projectSearch)
+        {
+            var allModels = new AllModels();
+            User student = await db.User.FirstOrDefaultAsync(s => s.Id == studentId);
+            User user = await db.User.FirstOrDefaultAsync(u => u.Name == User.Identity.Name);
+            ViewData["role"] = user.Role;
+            if (!String.IsNullOrEmpty(projectSearch))
+            {
+                if (student != null)
+                {
+                    allModels.projects = await db.projects.Where(p => p.Name == student.Name && (p.Name.Contains(projectSearch) || p.Group.Contains(projectSearch) || p.NameOfProject.Contains(projectSearch)) ).ToListAsync();
+                    allModels.favorite = await db.favorite.ToListAsync();
+                    allModels.users = await db.User.ToListAsync();
+                    return View(allModels);
+                }
+            } else
+            {
+                if (student != null)
+                {
+                    allModels.projects = await db.projects.Where(p => p.Name == student.Name).ToListAsync();
+                    allModels.favorite = await db.favorite.ToListAsync();
+                    allModels.users = await db.User.ToListAsync();
+                    return View(allModels);
+                }
+            }
+            return NotFound();
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
